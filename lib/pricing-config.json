@@ -1,0 +1,66 @@
+{
+  "equipment": {
+    "panels": {
+      "cost_per_watt": 380,
+      "standard_derating": 1.25,
+      "min_watts": 500
+    },
+    "batteries": {
+      "lithium": {
+        "cost_per_ah": {
+          "12v": 2800,
+          "24v": 5200,
+          "48v": 9800
+        },
+        "dod": 0.8,
+        "efficiency": 0.95,
+        "min_ah": 100
+      },
+      "tubular": {
+        "cost_per_ah": {
+          "12v": 950,
+          "24v": 1800,
+          "48v": 3500
+        },
+        "dod": 0.5,
+        "efficiency": 0.85,
+        "min_ah": 200
+      }
+    },
+    "inverters": {
+      "pure_sine": {
+        "cost_per_kva": 240000,
+        "safety_margin": 1.3,
+        "min_kva": 1
+      }
+    },
+    "solar_generators": [
+      { "name": "Lite Station", "max_wh": 500, "cost": 185000, "label": "Perfect for Lights, Phones & Fan" },
+      { "name": "Power Box", "max_wh": 1200, "cost": 420000, "label": "Powers TV, Fan & Laptop" },
+      { "name": "Executive Go", "max_wh": 2500, "cost": 780000, "label": "Full Work-from-Home Backup" }
+    ]
+  },
+  "regions": {
+    "lagos": { 
+      "psh": 4.5, 
+      "label": "Lagos / South-West",
+      "panel_derating_factor": 1.2
+    },
+    "abuja": { 
+      "psh": 5.5, 
+      "label": "Abuja / North-Central",
+      "panel_derating_factor": 1.25
+    },
+    "kano": { 
+      "psh": 6.5, 
+      "label": "Kano / North",
+      "panel_derating_factor": 1.35
+    },
+    "ph": { 
+      "psh": 4.2, 
+      "label": "Port Harcourt / South-South",
+      "panel_derating_factor": 1.2
+    }
+  },
+  "installation_fee_percentage": 0.15
+}

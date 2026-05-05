@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+@theme {
+  --color-primary: #F59E0B; /* Solar Amber - Light */
+  --color-success: #10B981; /* Emerald Green */
+  --color-surface: var(--surface);
+  --color-border: var(--border);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+  
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
+
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #FFFFFF;
+  --surface: #F8F9FA;
+  --foreground: #1A1A1B;
+  --secondary-text: #64748B;
+  --primary-action: #F59E0B;
+  --success: #10B981;
+  --border: #E2E8F0;
+}
+
+[data-theme='dark'] {
+  --background: #0F172A;
+  --surface: #1E293B;
+  --foreground: #F8FAFC;
+  --secondary-text: #94A3B8;
+  --primary-action: #FBBF24;
+  --success: #34D399;
+  --border: #334155;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PRD Specific: Flat UI - No Shadows, No Gradients, No Glass */
+@layer base {
+  * {
+    @apply border-border;
+    box-shadow: none !important;
   }
+}
+
+@layer utilities {
+  .text-secondary {
+    color: var(--secondary-text);
+  }
+  
+  .bg-surface {
+    background-color: var(--surface);
+  }
+
+  .border-flat {
+    border: 1px solid var(--border);
+  }
+
+  .btn-flat {
+    @apply px-6 py-3 font-bold transition-colors rounded-[8px] flex items-center justify-center gap-2;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-[#1A1A1B] hover:opacity-90;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border border-primary text-primary hover:bg-primary hover:text-[#1A1A1B];
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
+
+
