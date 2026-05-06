@@ -960,29 +960,47 @@ export default function CalculatorClient() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border mb-12">
-                  <div className="bg-surface p-8">
-                    <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-4">
-                      Daily Energy
-                    </p>
-                    <p className="font-display font-black text-5xl text-foreground tracking-tighter">
-                      {(result.dailyEnergyWh / 1000).toFixed(1)}
-                      <span className="text-xl ml-1 text-secondary-text">
-                        kWh
-                      </span>
-                    </p>
-                  </div>
-                  <div className="bg-surface p-8">
-                    <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-4">
-                      Recommended Output
-                    </p>
-                    <p className="font-display font-black text-5xl text-foreground tracking-tighter">
-                      {result.systemType === "generator"
-                        ? "Portable"
-                        : `${result.inverterKva}kVA`}
-                    </p>
-                  </div>
-                </div>
+                {(() => {
+                  const PANEL_WATTS = 500;
+                  const BATTERY_AH = 200;
+                  const panelCount = result.systemType === "custom" ? Math.ceil(result.panelWattsRequired / PANEL_WATTS) : 0;
+                  const batteryCount = result.systemType === "custom" ? Math.ceil(result.batteryAhRequired / BATTERY_AH) : 0;
+                  return (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border mb-12">
+                      <div className="bg-surface p-6">
+                        <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-3">Daily Energy</p>
+                        <p className="font-display font-black text-4xl text-foreground tracking-tighter">
+                          {(result.dailyEnergyWh / 1000).toFixed(1)}
+                          <span className="text-base ml-1 text-secondary-text">kWh</span>
+                        </p>
+                      </div>
+                      <div className="bg-surface p-6">
+                        <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-3">Inverter</p>
+                        <p className="font-display font-black text-4xl text-foreground tracking-tighter">
+                          {result.systemType === "generator" ? "Portable" : `${result.inverterKva}kVA`}
+                        </p>
+                      </div>
+                      {result.systemType === "custom" && (
+                        <>
+                          <div className="bg-surface p-6">
+                            <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-3">Solar Panels</p>
+                            <p className="font-display font-black text-4xl text-foreground tracking-tighter">
+                              {panelCount}
+                              <span className="text-base ml-1 text-secondary-text">× {PANEL_WATTS}W</span>
+                            </p>
+                          </div>
+                          <div className="bg-surface p-6">
+                            <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-3">Batteries</p>
+                            <p className="font-display font-black text-4xl text-foreground tracking-tighter">
+                              {batteryCount}
+                              <span className="text-base ml-1 text-secondary-text">× {BATTERY_AH}Ah</span>
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 <div className="bg-background border-4 border-primary p-12 mb-12 relative overflow-hidden">
                   <p className="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-4">
@@ -1030,6 +1048,12 @@ export default function CalculatorClient() {
                   </p>
                 </div>
 
+                {(() => {
+                  const PANEL_WATTS = 500;
+                  const BATTERY_AH = 200;
+                  const panelCount = result.systemType === "custom" ? Math.ceil(result.panelWattsRequired / PANEL_WATTS) : 0;
+                  const batteryCount = result.systemType === "custom" ? Math.ceil(result.batteryAhRequired / BATTERY_AH) : 0;
+                  return (
                 <div className="bg-background border border-border p-10">
                   <h3 className="font-black text-xs uppercase tracking-[0.4em] text-primary mb-10">
                     System Specifications
@@ -1038,24 +1062,42 @@ export default function CalculatorClient() {
                     <div className="space-y-6">
                       {result.systemType === "custom" && (
                         <>
-                          <div className="flex justify-between items-center border-b border-border pb-4">
+                          <div className="flex justify-between items-start border-b border-border pb-4">
                             <span className="text-xs font-bold text-secondary-text uppercase tracking-widest">
                               Solar Array
                             </span>
-                            <span className="font-black text-foreground text-sm">
-                              {result.panelWattsRequired} Watts
-                            </span>
+                            <div className="text-right">
+                              <span className="font-black text-foreground text-sm block">
+                                {result.panelWattsRequired} Watts
+                              </span>
+                              <span className="text-[10px] text-primary font-bold">
+                                {panelCount} × {PANEL_WATTS}W panel{panelCount !== 1 ? "s" : ""}
+                              </span>
+                            </div>
                           </div>
-                          <div className="flex justify-between items-center border-b border-border pb-4">
+                          <div className="flex justify-between items-start border-b border-border pb-4">
                             <span className="text-xs font-bold text-secondary-text uppercase tracking-widest">
-                              Storage Bank
+                              Battery Bank
                             </span>
-                            <span className="font-black text-foreground text-sm">
-                              {result.batteryAhRequired} Ah
-                            </span>
+                            <div className="text-right">
+                              <span className="font-black text-foreground text-sm block">
+                                {result.batteryAhRequired} Ah
+                              </span>
+                              <span className="text-[10px] text-primary font-bold">
+                                {batteryCount} × {BATTERY_AH}Ah unit{batteryCount !== 1 ? "s" : ""}
+                              </span>
+                            </div>
                           </div>
                         </>
                       )}
+                      <div className="flex justify-between items-center border-b border-border pb-4">
+                        <span className="text-xs font-bold text-secondary-text uppercase tracking-widest">
+                          Inverter
+                        </span>
+                        <span className="font-black text-foreground text-sm uppercase">
+                          {result.systemType === "generator" ? "Built-in" : `${result.inverterKva} kVA`}
+                        </span>
+                      </div>
                       <div className="flex justify-between items-center border-b border-border pb-4">
                         <span className="text-xs font-bold text-secondary-text uppercase tracking-widest">
                           Technology
@@ -1114,6 +1156,8 @@ export default function CalculatorClient() {
                     </div>
                   </div>
                 </div>
+                  );
+                })()}
 
                 <div className="mt-8 flex gap-4">
                   <button
