@@ -41,6 +41,11 @@
     ]
   },
   "regions": {
+    "enugu": {
+      "psh": 4.8,
+      "label": "Enugu / South-East",
+      "panel_derating_factor": 1.2
+    },
     "lagos": { 
       "psh": 4.5, 
       "label": "Lagos / South-West",

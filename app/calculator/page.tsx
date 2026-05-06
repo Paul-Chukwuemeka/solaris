@@ -51,7 +51,7 @@ const PRESET_LOADS = [
 export default function CalculatorPage() {
   const [step, setStep] = useState(1);
   const [region, setRegion] =
-    useState<keyof typeof pricingConfig.regions>("lagos");
+    useState<keyof typeof pricingConfig.regions>("enugu");
   const [batteryType, setBatteryType] = useState<"lithium" | "tubular">(
     "lithium",
   );
@@ -261,17 +261,24 @@ export default function CalculatorPage() {
               {Object.entries(pricingConfig.regions).map(([key, data]) => (
                 <button
                   key={key}
-                  onClick={() => setRegion(key as any)}
-                  className={`p-6 text-left border-2 rounded-[8px] transition-all flex justify-between items-center ${
+                  onClick={() => setRegion(key as keyof typeof pricingConfig.regions)}
+                  className={`p-6 text-left border-2 rounded-[8px] transition-all flex justify-between items-center relative ${
                     region === key
                       ? "border-primary bg-surface"
                       : "border-border bg-background hover:bg-surface"
                   }`}
                 >
                   <div>
-                    <p className="font-black text-foreground uppercase tracking-wider mb-1">
-                      {data.label}
-                    </p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="font-black text-foreground uppercase tracking-wider">
+                        {data.label}
+                      </p>
+                      {key === "enugu" && (
+                        <span className="text-[8px] font-black uppercase tracking-widest bg-primary text-background px-2 py-0.5 rounded-[4px]">
+                          HQ
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-secondary-text font-bold">
                       Avg. {data.psh} Peak Sun Hours
                     </p>

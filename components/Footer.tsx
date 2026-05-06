@@ -46,16 +46,21 @@ export default function Footer() {
           <h4 className="font-black text-xs uppercase tracking-[0.2em] mb-10 text-primary">Contact Us</h4>
           <ul className="flex flex-col gap-6 text-slate-400 text-sm font-medium">
             <li className="flex items-start gap-4">
-              <MapPin className="w-5 h-5 text-primary shrink-0" />
-              <span>123 Solar Way, Victoria Island,<br />Lagos, Nigeria</span>
+              <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <span>
+                Shop 13, POWA Plaza,<br />
+                By Ogui Police Station,<br />
+                Enugu, Nigeria
+                <span className="block mt-1 text-[10px] font-black uppercase tracking-widest text-primary">Head Office</span>
+              </span>
             </li>
             <li className="flex items-center gap-4">
               <Phone className="w-5 h-5 text-primary shrink-0" />
-              <span>+234 800 SOLAR LIFE</span>
+              <a href="tel:+2349166301384" className="hover:text-primary transition-colors">+234 916 630 1384</a>
             </li>
             <li className="flex items-center gap-4">
               <Mail className="w-5 h-5 text-primary shrink-0" />
-              <span>hello@winepresssolar.com</span>
+              <a href="mailto:hello@winepresssolar.com" className="hover:text-primary transition-colors">hello@winepresssolar.com</a>
             </li>
           </ul>
         </div>
@@ -79,7 +84,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-600 text-[10px] uppercase tracking-[0.2em] font-black">
         <p>© {currentYear} Wine Press Solar Services.</p>
         <div className="flex gap-8">
-          <span>RC: 123456789</span>
+          <span>Enugu, Nigeria</span>
           <span>Built for Performance</span>
         </div>
       </div>

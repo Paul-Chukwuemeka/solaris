@@ -13,7 +13,7 @@ export default function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 bg-surface border border-border px-3 py-1.5 rounded-[8px] mb-8">
             <span className="w-2 h-2 bg-primary rounded-full"></span>
-            <span className="text-[10px] font-black tracking-widest uppercase text-foreground">Installing across Lagos & Abuja</span>
+            <span className="text-[10px] font-black tracking-widest uppercase text-foreground">Headquartered in Enugu · Installing Nationwide</span>
           </div>
 
           <h1 className="font-display font-black text-5xl md:text-7xl text-foreground leading-[1.1] mb-8">
@@ -71,7 +71,7 @@ export default function Hero() {
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-background border border-border p-5 rounded-[8px]">
                     <p className="text-foreground font-black text-xl mb-1 leading-none uppercase tracking-tighter">Premium 5.5kVA System</p>
-                    <p className="text-secondary-text text-[10px] font-bold uppercase tracking-widest">Lekki, Lagos Installation</p>
+                    <p className="text-secondary-text text-[10px] font-bold uppercase tracking-widest">Enugu, South-East Installation</p>
                   </div>
                 </div>
              </div>
