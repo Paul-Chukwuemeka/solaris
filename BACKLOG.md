@@ -175,10 +175,10 @@ Implemented a static MDX blog with `@next/mdx`. No external CMS required — art
 ---
 
 ### 3.5 `/contact` — Lead Capture Page
-**Priority:** 🟠 P1  
-**File(s):** `app/contact/` (new)  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/contact/page.tsx`, `app/contact/ContactClient.tsx`  
 **Detail:**  
-No standalone contact/quote page exists. The PRD lists `/contact` as a required route with a lead capture form + WhatsApp link. Currently, leads can only come through the calculator (which isn't wired), and the "Chat on WhatsApp" links use a placeholder number.
+Created full `/contact` page with a lead capture form wired to `POST /api/leads`. Fields: full name, WhatsApp/phone, email, city (required); service type, system size, timeline selects; and notes textarea. Inline field-level validation errors from API. Optimistic loading state (spinner, disabled button). On success, renders a personalised confirmation screen with name + phone and next-steps list. Sidebar has WhatsApp direct CTA, calculator link, and contact details card.
 
 ---
 
