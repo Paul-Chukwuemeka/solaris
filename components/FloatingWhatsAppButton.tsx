@@ -16,7 +16,7 @@ export default function FloatingWhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppButtonClicked("floating-button")}
-      className="fixed bottom-8 right-8 z-[60] group"
+      className="fixed bottom-8 right-8 z-[60] group print:hidden"
       aria-label="Contact us on WhatsApp"
     >
       <div className="relative bg-[#25D366] text-white p-4 rounded-[8px] border-2 border-white/20 hover:scale-105 transition-transform duration-300 flex items-center justify-center">

@@ -101,4 +101,17 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@media print {
+  nav, footer, .floating-whatsapp {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  a[href]::after {
+    content: none !important;
+  }
+}
+
 

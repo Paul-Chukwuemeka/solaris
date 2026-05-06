@@ -39,9 +39,10 @@ import {
   Speaker,
   Plug,
   BatteryCharging,
+  Copy,
+  Check,
 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   calculateSystem,
   LoadItem,
@@ -286,11 +287,33 @@ export default function CalculatorClient() {
   const [customWatts, setCustomWatts] = useState("");
   const [autonomyDays, setAutonomyDays] = useState<number>(1);
   const [budgetRange, setBudgetRange] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Fire once on mount
   useEffect(() => {
     trackCalculatorStarted();
+  }, []);
+
+  // Hydrate from ?share= query param
+  useEffect(() => {
+    const encoded = searchParams.get("share");
+    if (!encoded) return;
+    try {
+      const snapshot = JSON.parse(atob(encoded));
+      if (snapshot.result) {
+        setResult(snapshot.result);
+        if (snapshot.region) setRegion(snapshot.region);
+        if (snapshot.batteryType) setBatteryType(snapshot.batteryType);
+        if (snapshot.autonomyDays) setAutonomyDays(snapshot.autonomyDays);
+        if (snapshot.budgetRange) setBudgetRange(snapshot.budgetRange);
+        setStep(6);
+      }
+    } catch {
+      // malformed share param — silently ignore, start fresh
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto-select recommended generator when load changes or step changes
@@ -1144,6 +1167,19 @@ export default function CalculatorClient() {
           <section className="animate-fade-in max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
+                {(() => {
+                  const buildShareUrl = () => {
+                    const snapshot = { result, region, batteryType, autonomyDays, budgetRange };
+                    const encoded = btoa(JSON.stringify(snapshot));
+                    return `${window.location.origin}/calculator?share=${encoded}`;
+                  };
+                  const handleCopy = () => {
+                    navigator.clipboard.writeText(buildShareUrl()).then(() => {
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2500);
+                    });
+                  };
+                  return (
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                   <div>
                     <h2 className="font-display font-black text-5xl md:text-6xl text-foreground mb-2 uppercase tracking-tighter">
@@ -1157,7 +1193,30 @@ export default function CalculatorClient() {
                         : `Based on ${region} Solar Calibration`}
                     </p>
                   </div>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <button
+                      onClick={handleCopy}
+                      className={`flex items-center gap-2 h-10 px-5 border-2 text-[10px] font-black uppercase tracking-widest transition-all ${
+                        copied
+                          ? "border-primary bg-primary text-[#1A1A1B]"
+                          : "border-border text-secondary-text hover:border-primary hover:text-foreground"
+                      }`}
+                      title="Copy shareable link"
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? "Copied!" : "Copy Link"}
+                    </button>
+                    <button
+                      onClick={() => window.print()}
+                      className="flex items-center gap-2 h-10 px-5 border-2 border-border text-secondary-text text-[10px] font-black uppercase tracking-widest hover:border-primary hover:text-foreground transition-all"
+                      title="Print this result"
+                    >
+                      <Printer className="w-3.5 h-3.5" /> Print
+                    </button>
+                  </div>
                 </div>
+                  );
+                })()}
 
                 {(() => {
                   const PANEL_WATTS = 500;
@@ -1373,7 +1432,7 @@ export default function CalculatorClient() {
                   );
                 })()}
 
-                <div className="mt-8 flex gap-4">
+                <div className="mt-8 flex gap-4 print:hidden">
                   <button
                     onClick={() => setStep(5)}
                     className="btn-flat btn-outline h-14 px-8"
@@ -1381,10 +1440,18 @@ export default function CalculatorClient() {
                     <ArrowLeft className="w-5 h-5" /> Back
                   </button>
                 </div>
+
+                {/* Print-only branding footer */}
+                <div className="hidden print:block mt-12 pt-8 border-t border-border text-center">
+                  <p className="font-display font-black text-xl uppercase tracking-tighter text-foreground mb-1">Wine Press Solar Services</p>
+                  <p className="text-xs text-secondary-text">Shop 13, POWA Plaza, By Ogui Police Station, Enugu, Nigeria</p>
+                  <p className="text-xs text-secondary-text">+234 916 630 1384 · hello@winepresssolar.com · winepresssolar.com</p>
+                  <p className="text-[9px] text-secondary-text mt-4">* This is an indicative estimate. Final pricing depends on site survey, equipment availability, and current market rates.</p>
+                </div>
               </div>
 
               {/* Refinement Sidebar */}
-              <div className="lg:col-span-1">
+              <div className="lg:col-span-1 print:hidden">
                 <div className="bg-surface border-2 border-border p-8 rounded-[8px] sticky top-32">
                   <h3 className="font-display font-black text-xl text-foreground mb-6 uppercase tracking-tighter">
                     Refine Your Loads

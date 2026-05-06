@@ -116,16 +116,11 @@ Added Step 5 "What's Your Budget?" — optional 6-option selector (Under ₦500k
 
 ---
 
-### 2.6 No Shareable / PDF Result
-**Priority:** 🟡 P2  
-**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+### ✅ 2.6 No Shareable / PDF Result
+**Priority:** 🟡 P2 → ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`, `app/calculator/page.tsx`, `app/globals.css`, `components/FloatingWhatsAppButton.tsx`  
 **Detail:**  
-PRD §7 specifies a "Save / Share My Result" CTA described as having "high viral and referral value." Not implemented.
-
-**Required work:**
-- Option A: Generate a shareable URL with system spec encoded as query params
-- Option B: Generate a print-friendly view / PDF using `window.print()` or a library
-- Include Wine Press branding and WhatsApp CTA in the share output
+Implemented Option A (shareable URL) + print. Results page now shows "Copy Link" and "Print" buttons. Share link encodes a JSON snapshot (result, region, batteryType, autonomyDays, budgetRange) as base64 in a `?share=` query param. Navigating to `/calculator?share=...` hydrates straight to the results page via a `useSearchParams` effect. Print view hides nav/footer/sidebar and shows a Wine Press branding footer. CalculatorPage wrapped in `<Suspense>` to satisfy Next.js `useSearchParams` boundary requirement.
 
 ---
 
