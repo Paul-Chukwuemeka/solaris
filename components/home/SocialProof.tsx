@@ -23,18 +23,21 @@ export default function SocialProof() {
       location: "Lekki Phase 1",
       size: "20kVA Hybrid",
       image: "https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?q=80&w=2070&auto=format&fit=crop",
+      alt: "20kVA hybrid solar installation for commercial office park — Wine Press Solar Services project",
     },
     {
       title: "Residential Duplex",
       location: "Surulere",
       size: "3.5kVA Inverter",
       image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop",
+      alt: "3.5kVA solar inverter system installed on residential duplex by Wine Press Solar Services",
     },
     {
       title: "Retail Pharmacy",
       location: "Gwarimpa",
       size: "7.5kVA System",
       image: "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2070&auto=format&fit=crop",
+      alt: "7.5kVA solar power system for retail pharmacy — Wine Press Solar commercial installation Nigeria",
     },
   ];
 
@@ -60,7 +63,7 @@ export default function SocialProof() {
             <div key={idx} className="group relative aspect-[4/5] overflow-hidden bg-surface">
               <img 
                 src={project.image} 
-                alt={project.title} 
+                alt={project.alt}
                 className="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute inset-0 border border-transparent group-hover:border-primary group-hover:border-8 transition-all pointer-events-none"></div>

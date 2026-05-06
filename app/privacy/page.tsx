@@ -1,4 +1,12 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Learn how Wine Press Solar Services collects, uses, and protects your data when you use our solar calculator and website.",
+  alternates: { canonical: "https://winepresssolar.com/privacy" },
+  robots: { index: false, follow: false },
+};
 
 export default function PrivacyPage() {
   return (

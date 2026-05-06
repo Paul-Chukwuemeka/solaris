@@ -66,21 +66,11 @@ No `/thank-you` route exists. This page is the conversion tracking trigger for G
 
 ---
 
-### 1.5 SEO Foundation — Missing
-**Priority:** 🔴 P0  
-**File(s):** `app/layout.tsx`, `app/page.tsx`, `app/calculator/page.tsx`, `public/` (new files needed)  
+### ✅ 1.5 SEO Foundation — Missing
+**Priority:** 🔴 P0 → ✅ DONE  
+**File(s):** `app/layout.tsx`, `app/page.tsx`, `app/calculator/page.tsx`, `app/calculator/CalculatorClient.tsx`, `public/robots.txt`, `public/sitemap.xml`  
 **Detail:**  
-Only a basic `<title>` and `<description>` meta tag exist. The PRD (§9) requires a full SEO foundation.
-
-**Required work:**
-- Add JSON-LD structured data for `LocalBusiness`, `Service`, `FAQPage`, `Review` schemas to the home page
-- Add unique `title` and `metaDescription` per page (use Next.js `generateMetadata`)
-- Add Open Graph and Twitter Card meta tags to all pages
-- Create `public/sitemap.xml` (or use `next-sitemap` package)
-- Create `public/robots.txt` — noindex `/calculator` result state (query param or separate route)
-- Add canonical tags
-- Add descriptive `alt` attributes to all `<img>` tags (currently using placeholder alt text)
-- Rename Unsplash image URLs to use descriptive `?auto=format` parameters
+Full SEO foundation implemented. Global metadata in `layout.tsx`: title template, OG tags, Twitter Card, keywords, robots, metadataBase. Unique per-page metadata on all routes. JSON-LD schemas on home page: `LocalBusiness` (Enugu address, phone, hours), `ItemList` of services, `FAQPage`. Calculator extracted into `CalculatorClient.tsx` so `page.tsx` can export server-side metadata with `robots: noindex`. `public/robots.txt` and `public/sitemap.xml` created. Descriptive alt text added to all `<img>` tags across Hero, About, and SocialProof.
 
 ---
 

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /calculator
+Disallow: /thank-you
+Disallow: /privacy
+Disallow: /terms
+
+Sitemap: https://winepresssolar.com/sitemap.xml

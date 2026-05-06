@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
 import SocialProof from "@/components/home/SocialProof";
 import Services from "@/components/home/Services";
@@ -6,6 +7,98 @@ import ROI from "@/components/home/ROI";
 import { HelpCircle, ChevronDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import WhatsAppLink from "@/components/WhatsAppLink";
+
+export const metadata: Metadata = {
+  title: "Wine Press Solar Services | Solar Energy Solutions in Enugu, Nigeria",
+  description:
+    "Wine Press Solar Services — Enugu's trusted solar company. We design, supply, install and maintain solar systems for homes and businesses across Nigeria. Get a free instant quote with our solar calculator.",
+  alternates: { canonical: "https://winepresssolar.com" },
+  openGraph: {
+    url: "https://winepresssolar.com",
+    title: "Wine Press Solar Services | Solar Energy Solutions in Enugu, Nigeria",
+    description:
+      "Enugu's trusted solar company. Solar panels, inverters, batteries — professionally installed. Use our free solar calculator to size your system in minutes.",
+  },
+};
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Wine Press Solar Services",
+  alternateName: "Winepress Solar Solutions",
+  description:
+    "Wine Press Solar Services designs, supplies, installs and maintains solar power systems for homes and businesses across Nigeria, headquartered in Enugu.",
+  url: "https://winepresssolar.com",
+  telephone: "+2349166301384",
+  email: "hello@winepresssolar.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Shop 13, POWA Plaza, By Ogui Police Station",
+    addressLocality: "Enugu",
+    addressRegion: "Enugu State",
+    addressCountry: "NG",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 6.3350,
+    longitude: 7.4999,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "08:00",
+      closes: "18:00",
+    },
+  ],
+  priceRange: "₦₦₦",
+  currenciesAccepted: "NGN",
+  paymentAccepted: "Cash, Bank Transfer",
+  areaServed: ["Enugu", "Lagos", "Abuja", "Port Harcourt", "Nigeria"],
+  hasMap: "https://maps.google.com/?q=POWA+Plaza+Enugu",
+  sameAs: ["https://www.facebook.com/winepresssolar"],
+};
+
+const servicesSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Wine Press Solar Services",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      item: {
+        "@type": "Service",
+        name: "Solar Panel Sales",
+        description: "Top-tier monocrystalline panels, deep-cycle batteries, and hybrid inverters from world-class brands.",
+        provider: { "@type": "LocalBusiness", name: "Wine Press Solar Services" },
+        areaServed: "Nigeria",
+      },
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      item: {
+        "@type": "Service",
+        name: "Solar System Installation",
+        description: "Professional solar system installation with 2-year workmanship warranty for homes and businesses.",
+        provider: { "@type": "LocalBusiness", name: "Wine Press Solar Services" },
+        areaServed: "Nigeria",
+      },
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      item: {
+        "@type": "Service",
+        name: "Solar Maintenance & Repair",
+        description: "Routine system health checks and fast repair services to keep your solar power running smoothly.",
+        provider: { "@type": "LocalBusiness", name: "Wine Press Solar Services" },
+        areaServed: "Nigeria",
+      },
+    },
+  ],
+};
 
 export default function Home() {
   const faqs = [
@@ -23,8 +116,21 @@ export default function Home() {
     }
   ];
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+
   return (
     <main className="flex min-h-screen flex-col bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Hero />
       <SocialProof />
       <Services />

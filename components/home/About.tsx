@@ -17,7 +17,7 @@ export default function About() {
               <div className="aspect-square bg-surface border border-border rounded-[8px] overflow-hidden mt-10 p-2">
                 <img 
                   src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=2070&auto=format&fit=crop" 
-                  alt="Team member" 
+                  alt="Wine Press Solar technician — professional solar installation engineer in Nigeria"
                   className="w-full h-full object-cover rounded-[4px] grayscale"
                 />
               </div>
@@ -28,7 +28,7 @@ export default function About() {
               <div className="col-span-2 aspect-[2/1] bg-surface border border-border rounded-[8px] overflow-hidden p-2">
                 <img 
                   src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=2070&auto=format&fit=crop" 
-                  alt="Solar Panels" 
+                  alt="Monocrystalline solar panels installed on a rooftop by Wine Press Solar Services in Nigeria"
                   className="w-full h-full object-cover rounded-[4px] grayscale-[0.5] hover:grayscale-0 transition-all duration-700"
                 />
               </div>
