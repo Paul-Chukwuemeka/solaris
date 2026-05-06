@@ -252,25 +252,27 @@ export default function CalculatorClient() {
 
   // Auto-select recommended generator when load changes or step changes
   useEffect(() => {
-    if (systemPreference === "generator" && step === 4) {
-      const dailyWh = loads.reduce(
-        (sum, item) => sum + item.watts * item.quantity * item.hours,
-        0,
-      );
-      const recommendedGen = pricingConfig.equipment.solar_generators
-        .slice()
-        .sort((a, b) => a.max_wh - b.max_wh)
-        .find((g) => g.max_wh >= dailyWh);
+    if (systemPreference !== "generator" || step !== 4) return;
 
-      if (recommendedGen && !selectedGenerator) {
-        setSelectedGenerator(recommendedGen.name);
-      }
+    const dailyWh = loads.reduce(
+      (sum, item) => sum + item.watts * item.quantity * item.hours,
+      0,
+    );
+    const recommendedGen = pricingConfig.equipment.solar_generators
+      .slice()
+      .sort((a, b) => a.max_wh - b.max_wh)
+      .find((g) => g.max_wh >= dailyWh);
+
+    if (recommendedGen && !selectedGenerator) {
+      const id = setTimeout(() => setSelectedGenerator(recommendedGen.name), 0);
+      return () => clearTimeout(id);
     }
   }, [step, systemPreference, loads, selectedGenerator]);
 
   // Auto-recalculate when loads change on the results page
   useEffect(() => {
-    if (step === 5) {
+    if (step !== 5) return;
+    const id = setTimeout(() => {
       const res = calculateSystem({
         loads,
         region,
@@ -281,7 +283,8 @@ export default function CalculatorClient() {
         batteryAutonomyDays: 1,
       });
       setResult(res);
-    }
+    }, 0);
+    return () => clearTimeout(id);
   }, [loads, region, batteryType, systemPreference, selectedGenerator, step]);
 
   const addLoad = (preset: PresetAppliance) => {
