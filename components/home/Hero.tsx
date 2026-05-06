@@ -62,7 +62,7 @@ export default function Hero() {
         {/* Hero Visual - Flat UI Version */}
         <div className="relative hidden lg:block">
           <div className="bg-surface border-2 border-border p-3 rounded-[8px] transform rotate-2">
-             <div className="aspect-[4/5] bg-slate-200 dark:bg-slate-800 rounded-[4px] relative overflow-hidden grayscale-[0.2] hover:grayscale-0 transition-all duration-500">
+             <div className="aspect-4/5 bg-slate-200 dark:bg-slate-800 rounded-[4px] relative overflow-hidden grayscale-[0.2] hover:grayscale-0 transition-all duration-500">
                 <Image
                   src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop"
                   alt="Wine Press Solar professional installation — 5.5kVA hybrid solar system installed in Enugu, South-East Nigeria"
@@ -71,7 +71,7 @@ export default function Hero() {
                   className="object-cover"
                   priority
                 />
-                <div className="absolute inset-0 border-[12px] border-surface pointer-events-none"></div>
+                <div className="absolute inset-0 border-12 border-surface pointer-events-none"></div>
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-background border border-border p-5 rounded-[8px]">
                     <p className="text-foreground font-black text-xl mb-1 leading-none uppercase tracking-tighter">Premium 5.5kVA System</p>

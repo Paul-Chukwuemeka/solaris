@@ -24,7 +24,7 @@ const projects = [
     size: "20kVA Hybrid",
     type: "Commercial",
     desc: "Full hybrid solar system with grid-tie capability for a 6-floor office complex. Eliminated 80% of diesel generator dependency.",
-    image: "https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2000&auto=format&fit=crop",
     alt: "20kVA hybrid solar installation for commercial office park — Wine Press Solar Services project in Lagos",
   },
   {

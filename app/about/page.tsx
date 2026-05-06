@@ -147,7 +147,7 @@ export default function AboutPage() {
                 Wine Press Solar Services was built to replace that dependency with something permanent. A properly designed solar system doesn't just cut electricity bills — it becomes the reliable infrastructure layer that everything else runs on.
               </p>
               <p>
-                We started in Enugu because that's home. We've since expanded to 12 states across Nigeria, carrying the same standard of technical work and the same commitment to honest system sizing with us.
+                We started in Enugu because that&apos;s home. We've since expanded to 12 states across Nigeria, carrying the same standard of technical work and the same commitment to honest system sizing with us.
               </p>
               <p>
                 Every installation we complete is a household or business that has permanently exited the generator economy. That's the mission, and we measure our success by it.
@@ -164,7 +164,7 @@ export default function AboutPage() {
             <div className="aspect-square bg-surface border border-border rounded-[8px] overflow-hidden p-2">
               <div className="relative w-full h-full rounded-[4px] overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=800&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?q=80&w=800&auto=format&fit=crop"
                   alt="Wine Press Solar technician at work on a Nigerian rooftop installation"
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
@@ -175,7 +175,7 @@ export default function AboutPage() {
             <div className="col-span-2 aspect-[2/1] bg-surface border border-border rounded-[8px] overflow-hidden p-2">
               <div className="relative w-full h-full rounded-[4px] overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=1200&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=1200&auto=format&fit=crop"
                   alt="Monocrystalline solar panels installed on a rooftop in Nigeria"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

@@ -18,7 +18,7 @@ export default function About() {
               <div className="aspect-square bg-surface border border-border rounded-[8px] overflow-hidden mt-10 p-2">
                 <div className="relative w-full h-full rounded-[4px] overflow-hidden">
                   <Image
-                    src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=800&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?q=80&w=800&auto=format&fit=crop"
                     alt="Wine Press Solar technician — professional solar installation engineer in Nigeria"
                     fill
                     sizes="(max-width: 1024px) 50vw, 25vw"
@@ -33,7 +33,7 @@ export default function About() {
               <div className="col-span-2 aspect-[2/1] bg-surface border border-border rounded-[8px] overflow-hidden p-2">
                 <div className="relative w-full h-full rounded-[4px] overflow-hidden">
                   <Image
-                    src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=1200&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=1200&auto=format&fit=crop"
                     alt="Monocrystalline solar panels installed on a rooftop by Wine Press Solar Services in Nigeria"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
