@@ -1,5 +1,6 @@
 import React from "react";
-import { Zap, ShieldCheck, PenTool as Tool, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { Zap, ShieldCheck, PenTool as Tool, ShoppingBag, ArrowRight } from "lucide-react";
 
 export default function Services() {
   const services = [
@@ -7,21 +8,25 @@ export default function Services() {
       title: "Solar Sales",
       desc: "Top-tier monocrystalline panels, deep-cycle batteries, and hybrid inverters from world-class brands.",
       icon: ShoppingBag,
+      href: "/services/solar-sales",
     },
     {
       title: "Expert Installation",
       desc: "Professional engineering team ensuring optimal panel placement and safe electrical integration.",
       icon: Zap,
+      href: "/services/installation",
     },
     {
       title: "Maintenance & Repair",
       desc: "Routine system health checks and fast repair services to keep your power running smoothly.",
       icon: Tool,
+      href: "/services/maintenance",
     },
     {
       title: "Energy Audit",
       desc: "Detailed analysis of your energy consumption to design the perfectly sized system for your needs.",
       icon: ShieldCheck,
+      href: "/services",
     },
   ];
 
@@ -42,14 +47,20 @@ export default function Services() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {services.map((service, idx) => (
-            <div key={idx} className="group bg-background p-10 rounded-[8px] border border-border hover:border-primary transition-colors duration-300">
+            <div key={idx} className="group bg-background p-10 rounded-[8px] border border-border hover:border-primary transition-colors duration-300 flex flex-col">
               <div className="w-12 h-12 border-2 border-primary rounded-[4px] flex items-center justify-center text-primary mb-10 group-hover:bg-primary group-hover:text-background transition-colors">
                 <service.icon size={24} />
               </div>
               <h4 className="font-display font-black text-lg mb-4 text-foreground uppercase tracking-tighter">{service.title}</h4>
-              <p className="text-secondary-text text-sm leading-relaxed font-medium">
+              <p className="text-secondary-text text-sm leading-relaxed font-medium flex-1">
                 {service.desc}
               </p>
+              <Link
+                href={service.href}
+                className="inline-flex items-center gap-2 mt-8 text-[10px] font-black uppercase tracking-widest text-primary hover:text-foreground transition-colors"
+              >
+                Learn More <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           ))}
         </div>

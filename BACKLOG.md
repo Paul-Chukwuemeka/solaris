@@ -133,27 +133,20 @@ Added a `handleStartOver` function that resets all calculator state (step, regio
 ---
 
 ### 2.8 No Disclaimer on Results Page
-**Priority:** 🟠 P1  
-**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-PRD §7 requires: *"This is an indicative estimate. Final pricing depends on site survey, equipment availability, and current market rates. Request a free quote for exact pricing."*
-
-**Required work:**
-- Add disclaimer text below cost estimate on the results page
+PRD §7 disclaimer text is present in two places on the results page: (1) inside the cost card below the price range, and (2) as a small footnote at the bottom of the results column. Confirmed present — no code changes required.
 
 ---
 
 ## Section 3 — Missing Pages & Routes
 
 ### 3.1 `/services` — Individual Service Detail Pages
-**Priority:** 🟠 P1  
-**File(s):** `app/services/` (new)  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/services/page.tsx`, `app/services/solar-sales/page.tsx`, `app/services/installation/page.tsx`, `app/services/maintenance/page.tsx`, `components/home/Services.tsx`, `components/Navigation.tsx`  
 **Detail:**  
-The Services section exists as a home page section but there are no dedicated `/services` routes. The PRD calls for individual pages for Solar Sales, Installation, and Repairs & Maintenance — each with "Learn More" links from the home cards.
-
-**Required work:**
-- Create `app/services/page.tsx` as an overview
-- Optionally create `app/services/installation/page.tsx`, `app/services/sales/page.tsx`, `app/services/maintenance/page.tsx`
+Created all four service routes as statically rendered Next.js pages with full metadata, canonical URLs, and OG tags. Nav "Services" link updated to `/services`. Home Services cards now include "Learn More →" links to each dedicated page. Each page follows the site's flat design system with icon, hero, detailed sections, and WhatsApp CTA.
 
 ---
 
