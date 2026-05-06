@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Calculator, ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -62,10 +63,13 @@ export default function Hero() {
         <div className="relative hidden lg:block">
           <div className="bg-surface border-2 border-border p-3 rounded-[8px] transform rotate-2">
              <div className="aspect-[4/5] bg-slate-200 dark:bg-slate-800 rounded-[4px] relative overflow-hidden grayscale-[0.2] hover:grayscale-0 transition-all duration-500">
-                <img 
-                  src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop" 
+                <Image
+                  src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop"
                   alt="Wine Press Solar professional installation — 5.5kVA hybrid solar system installed in Enugu, South-East Nigeria"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 0px, 50vw"
+                  className="object-cover"
+                  priority
                 />
                 <div className="absolute inset-0 border-[12px] border-surface pointer-events-none"></div>
                 <div className="absolute bottom-6 left-6 right-6">

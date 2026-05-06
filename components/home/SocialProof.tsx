@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Star, Quote, MapPin, ArrowRight } from "lucide-react";
 
@@ -70,10 +71,12 @@ export default function SocialProof() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1 mb-24 border border-border">
           {projects.map((project, idx) => (
             <div key={idx} className="group relative aspect-[4/5] overflow-hidden bg-surface">
-              <img 
-                src={project.image} 
+              <Image
+                src={project.image}
                 alt={project.alt}
-                className="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute inset-0 border border-transparent group-hover:border-primary group-hover:border-8 transition-all pointer-events-none"></div>
               <div className="absolute bottom-0 left-0 right-0 p-8 bg-background border-t border-border transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">

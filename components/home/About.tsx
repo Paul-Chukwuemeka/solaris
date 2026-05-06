@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Award, Users, Heart } from "lucide-react";
 
 export default function About() {
@@ -15,22 +16,30 @@ export default function About() {
           <div className="relative">
             <div className="relative z-10 grid grid-cols-2 gap-4">
               <div className="aspect-square bg-surface border border-border rounded-[8px] overflow-hidden mt-10 p-2">
-                <img 
-                  src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=2070&auto=format&fit=crop" 
-                  alt="Wine Press Solar technician — professional solar installation engineer in Nigeria"
-                  className="w-full h-full object-cover rounded-[4px] grayscale"
-                />
+                <div className="relative w-full h-full rounded-[4px] overflow-hidden">
+                  <Image
+                    src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=800&auto=format&fit=crop"
+                    alt="Wine Press Solar technician — professional solar installation engineer in Nigeria"
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="object-cover grayscale"
+                  />
+                </div>
               </div>
               <div className="aspect-square bg-primary border border-border rounded-[8px] p-8 flex flex-col justify-end">
                 <p className="text-background font-display font-black text-5xl mb-2 tracking-tighter">3+</p>
                 <p className="text-background text-[10px] font-black uppercase tracking-widest leading-tight">Years of Solar Excellence</p>
               </div>
               <div className="col-span-2 aspect-[2/1] bg-surface border border-border rounded-[8px] overflow-hidden p-2">
-                <img 
-                  src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=2070&auto=format&fit=crop" 
-                  alt="Monocrystalline solar panels installed on a rooftop by Wine Press Solar Services in Nigeria"
-                  className="w-full h-full object-cover rounded-[4px] grayscale-[0.5] hover:grayscale-0 transition-all duration-700"
-                />
+                <div className="relative w-full h-full rounded-[4px] overflow-hidden">
+                  <Image
+                    src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=1200&auto=format&fit=crop"
+                    alt="Monocrystalline solar panels installed on a rooftop by Wine Press Solar Services in Nigeria"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-700"
+                  />
+                </div>
               </div>
             </div>
             {/* Structural accent block */}

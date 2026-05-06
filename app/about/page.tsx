@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Award,
@@ -161,18 +162,26 @@ export default function AboutPage() {
               <p className="text-background text-[10px] font-black uppercase tracking-widest leading-tight">Years of Solar Excellence</p>
             </div>
             <div className="aspect-square bg-surface border border-border rounded-[8px] overflow-hidden p-2">
-              <img
-                src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=800&auto=format&fit=crop"
-                alt="Wine Press Solar technician at work on a Nigerian rooftop installation"
-                className="w-full h-full object-cover rounded-[4px] grayscale"
-              />
+              <div className="relative w-full h-full rounded-[4px] overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1624397648246-47ce3a4d8be0?q=80&w=800&auto=format&fit=crop"
+                  alt="Wine Press Solar technician at work on a Nigerian rooftop installation"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover grayscale"
+                />
+              </div>
             </div>
             <div className="col-span-2 aspect-[2/1] bg-surface border border-border rounded-[8px] overflow-hidden p-2">
-              <img
-                src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=1200&auto=format&fit=crop"
-                alt="Monocrystalline solar panels installed on a rooftop in Nigeria"
-                className="w-full h-full object-cover rounded-[4px] grayscale-[0.4] hover:grayscale-0 transition-all duration-700"
-              />
+              <div className="relative w-full h-full rounded-[4px] overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1594398901394-4e34939a4fe0?q=80&w=1200&auto=format&fit=crop"
+                  alt="Monocrystalline solar panels installed on a rooftop in Nigeria"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover grayscale-[0.4] hover:grayscale-0 transition-all duration-700"
+                />
+              </div>
             </div>
           </div>
         </div>

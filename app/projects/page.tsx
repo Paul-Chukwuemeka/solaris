@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Star, Quote, MapPin, ArrowRight, Zap } from "lucide-react";
 import WhatsAppLink from "@/components/WhatsAppLink";
@@ -209,11 +210,13 @@ export default function ProjectsPage() {
               key={idx}
               className="group relative overflow-hidden bg-surface border border-border rounded-[8px] hover:border-primary transition-colors duration-300"
             >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <Image
                   src={project.image}
                   alt={project.alt}
-                  className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-6">

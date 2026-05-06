@@ -206,10 +206,10 @@ The PRD explicitly states: *"Hero image: real project photographs, ideally showi
 ---
 
 ### 4.2 All `<img>` Tags Should Use Next.js `<Image>`
-**Priority:** 🟠 P1  
-**File(s):** `components/home/Hero.tsx`, `components/home/About.tsx`, `components/home/SocialProof.tsx`  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `components/home/Hero.tsx`, `components/home/About.tsx`, `components/home/SocialProof.tsx`, `app/about/page.tsx`, `app/projects/page.tsx`, `next.config.ts`  
 **Detail:**  
-All image tags use plain `<img>`, not Next.js `<Image>`. This misses automatic WebP conversion, lazy loading, and Core Web Vitals (LCP/CLS) optimisation.
+All `<img>` tags replaced with Next.js `<Image>` across all 5 files (14 images total). Each has correct `fill` + `sizes` props for responsive WebP delivery, lazy loading, and CLS prevention. Hero image has `priority` prop for LCP optimisation. Unsplash domain added to `images.remotePatterns` in next.config.ts.
 
 ---
 
