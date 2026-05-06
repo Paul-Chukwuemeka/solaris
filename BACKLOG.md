@@ -108,15 +108,11 @@ Added Step 4 "How Long Should Your Battery Last?" — a dedicated autonomy selec
 
 ---
 
-### 2.5 No Budget Indicator Step
-**Priority:** 🟡 P2  
-**File(s):** `app/calculator/page.tsx`  
+### ✅ 2.5 No Budget Indicator Step
+**Priority:** 🟡 P2 → ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-PRD Step 5 is an optional budget range selector (Under ₦500k / ₦500k–₦1M / ₦1M–₦2.5M / ₦2.5M–₦5M / ₦5M+ / Flexible). Used to flag lead quality and offer budget-aligned system variants.
-
-**Required work:**
-- Add optional budget step before results
-- Include selected budget range in lead payload
+Added Step 5 "What's Your Budget?" — optional 6-option selector (Under ₦500k / ₦500k–₦1M / ₦1M–₦2.5M / ₦2.5M–₦5M / ₦5M+ / Flexible) with a "Skip →" escape hatch. Selected budget wired into the lead payload and WhatsApp pre-fill message. Progress bar expanded to 7 segments. Generator path also routes through this step.
 
 ---
 

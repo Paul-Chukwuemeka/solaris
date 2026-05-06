@@ -244,6 +244,15 @@ const AUTONOMY_OPTIONS = [
   },
 ];
 
+const BUDGET_OPTIONS = [
+  { id: "under-500k", label: "Under ₦500k", sublabel: "Entry-level — small solar generators", tier: 1 },
+  { id: "500k-1m", label: "₦500k – ₦1M", sublabel: "Basic home backup — essential appliances", tier: 2 },
+  { id: "1m-2.5m", label: "₦1M – ₦2.5M", sublabel: "Mid-range — full home coverage", tier: 3 },
+  { id: "2.5m-5m", label: "₦2.5M – ₦5M", sublabel: "Premium — inverter AC, full independence", tier: 4 },
+  { id: "5m-plus", label: "₦5M+", sublabel: "Commercial grade — high capacity & autonomy", tier: 5 },
+  { id: "flexible", label: "Flexible", sublabel: "Open budget — I want the best fit for my needs", tier: 0 },
+];
+
 export default function CalculatorClient() {
   const [step, setStep] = useState(0);
   const [installationContext, setInstallationContext] = useState<InstallationContext | null>(null);
@@ -276,6 +285,7 @@ export default function CalculatorClient() {
   const [customName, setCustomName] = useState("");
   const [customWatts, setCustomWatts] = useState("");
   const [autonomyDays, setAutonomyDays] = useState<number>(1);
+  const [budgetRange, setBudgetRange] = useState<string | null>(null);
   const router = useRouter();
 
   // Fire once on mount
@@ -421,6 +431,7 @@ export default function CalculatorClient() {
         ...leadForm,
         installationContext: installationContext ?? "other",
         region: regionLabel,
+        budgetRange: BUDGET_OPTIONS.find((o) => o.id === budgetRange)?.label ?? "Not specified",
         systemSpec,
         loads: loads.map((l) => ({
           name: l.name,
@@ -460,7 +471,7 @@ export default function CalculatorClient() {
       batteryAutonomyDays: autonomyDays,
     });
     setResult(res);
-    trackCalculatorStepCompleted(5, "Autonomy & System Preference Set");
+    trackCalculatorStepCompleted(6, "System Calculated");
     trackCalculatorResultViewed({
       region: pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label ?? region,
       systemType: res.systemType,
@@ -474,9 +485,9 @@ export default function CalculatorClient() {
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
-        {/* Progress Bar - 6 steps (0-5, results is step 6) */}
+        {/* Progress Bar - 7 steps (0-6, results is step 6) */}
         <div className="flex gap-2 mb-12">
-          {[0, 1, 2, 3, 4, 5].map((s) => (
+          {[0, 1, 2, 3, 4, 5, 6].map((s) => (
             <div
               key={s}
               className={`h-1.5 flex-1 rounded-[2px] transition-colors ${step > s ? "bg-primary" : step === s ? "bg-primary/60" : "bg-surface border border-border"}`}
@@ -966,17 +977,17 @@ export default function CalculatorClient() {
               </button>
               <button
                 onClick={() => {
+                  trackCalculatorStepCompleted(3, "Battery Type Set");
                   if (systemPreference === "generator") {
-                    handleCalculate();
+                    setStep(5);
                   } else {
-                    trackCalculatorStepCompleted(3, "Battery Type Set");
                     setStep(4);
                   }
                 }}
                 className="btn-flat btn-primary h-14 px-10 flex-1"
               >
                 {systemPreference === "generator"
-                  ? "View Final Report"
+                  ? "Continue"
                   : "Set Backup Duration"}
                 <ArrowRight className="w-5 h-5" />
               </button>
@@ -1050,6 +1061,75 @@ export default function CalculatorClient() {
               <button
                 onClick={() => {
                   trackCalculatorStepCompleted(4, `Autonomy: ${AUTONOMY_OPTIONS.find((o) => o.days === autonomyDays)?.label ?? autonomyDays}`);
+                  setStep(5);
+                }}
+                className="btn-flat btn-primary h-14 px-10 flex-1"
+              >
+                Continue <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          </section>
+        )}
+
+        {step === 5 && (
+          <section className="animate-fade-in max-w-4xl">
+            <div className="flex items-start justify-between mb-4">
+              <h2 className="font-display font-black text-4xl md:text-5xl text-foreground uppercase tracking-tighter">
+                What&apos;s Your Budget?
+              </h2>
+              <button
+                onClick={() => {
+                  trackCalculatorStepCompleted(5, "Budget: Skipped");
+                  handleCalculate();
+                }}
+                className="text-[10px] font-black uppercase tracking-widest text-secondary-text hover:text-foreground transition-colors shrink-0 mt-2"
+              >
+                Skip →
+              </button>
+            </div>
+            <p className="text-secondary-text mb-12 font-medium">
+              This helps us match you to the right system tier and flag your lead for our team. You can skip this step.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+              {BUDGET_OPTIONS.map((opt) => {
+                const isSelected = budgetRange === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() => setBudgetRange(isSelected ? null : opt.id)}
+                    className={`p-8 text-left border-4 rounded-[8px] transition-all relative group ${
+                      isSelected
+                        ? "border-primary bg-surface"
+                        : "border-border bg-background hover:border-primary/40"
+                    }`}
+                  >
+                    <h3 className="font-black text-xl text-foreground uppercase tracking-tighter mb-1">
+                      {opt.label}
+                    </h3>
+                    <p className="text-xs text-secondary-text font-medium leading-relaxed">
+                      {opt.sublabel}
+                    </p>
+                    {isSelected && (
+                      <div className="absolute top-4 right-4 text-primary">
+                        <CheckCircle2 className="w-5 h-5" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => setStep(4)}
+                className="btn-flat btn-outline h-14 px-8"
+              >
+                <ArrowLeft className="w-5 h-5" /> Back
+              </button>
+              <button
+                onClick={() => {
+                  trackCalculatorStepCompleted(5, `Budget: ${BUDGET_OPTIONS.find((o) => o.id === budgetRange)?.label ?? "Not Selected"}`);
                   handleCalculate();
                 }}
                 className="btn-flat btn-primary h-14 px-10 flex-1"
@@ -1154,6 +1234,7 @@ export default function CalculatorClient() {
                               `⏱ Backup Duration: ${AUTONOMY_OPTIONS.find((o) => o.days === autonomyDays)?.label ?? `${autonomyDays}d`}\n`) +
                           `📊 Daily Load: ${(result.dailyEnergyWh / 1000).toFixed(1)} kWh\n` +
                           `📍 Region: ${pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label}\n` +
+                          (budgetRange ? `💵 Budget: ${BUDGET_OPTIONS.find((o) => o.id === budgetRange)?.label}\n` : "") +
                           `💰 Est. Cost: ₦${Math.round(result.estimatedCost.min).toLocaleString()} – ₦${Math.round(result.estimatedCost.max).toLocaleString()}\n\n` +
                           `I'd like to discuss a quote. Can you help?`
                         )}`}
@@ -1294,7 +1375,7 @@ export default function CalculatorClient() {
 
                 <div className="mt-8 flex gap-4">
                   <button
-                    onClick={() => setStep(systemPreference === "generator" ? 3 : 4)}
+                    onClick={() => setStep(5)}
                     className="btn-flat btn-outline h-14 px-8"
                   >
                     <ArrowLeft className="w-5 h-5" /> Back
