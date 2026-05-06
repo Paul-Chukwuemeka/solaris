@@ -5,7 +5,6 @@ import {
   Calculator,
   ArrowLeft,
   ArrowRight,
-  Check,
   Lightbulb,
   Tv,
   Wind,
@@ -15,14 +14,31 @@ import {
   MapPin,
   CheckCircle2,
   Zap,
+  MessageCircle,
+  X,
+  Loader2,
+  User,
+  Phone,
+  Mail,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   calculateSystem,
   LoadItem,
   CalculationResult,
 } from "@/lib/solar-engine";
 import pricingConfig from "@/lib/pricing-config.json";
+
+const HOW_DID_YOU_HEAR_OPTIONS = [
+  "Google Search",
+  "Facebook / Instagram Ad",
+  "WhatsApp",
+  "Referral from a Friend",
+  "Roadside Billboard",
+  "Other",
+];
 
 const PRESET_LOADS = [
   { name: "LED Bulbs", watts: 10, icon: Lightbulb },
@@ -46,8 +62,20 @@ export default function CalculatorPage() {
     null,
   );
   const [showPathModal, setShowPathModal] = useState(false);
+  const [showLeadModal, setShowLeadModal] = useState(false);
   const [loads, setLoads] = useState<LoadItem[]>([]);
   const [result, setResult] = useState<CalculationResult | null>(null);
+  const [leadForm, setLeadForm] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    city: "",
+    source: "",
+    notes: "",
+  });
+  const [leadErrors, setLeadErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   // Auto-select recommended generator when load changes or step changes
   useEffect(() => {
@@ -121,6 +149,76 @@ export default function CalculatorPage() {
 
   const updateHours = (id: string, hours: number) => {
     setLoads(loads.map((l) => (l.id === id ? { ...l, hours } : l)));
+  };
+
+  const validateLeadForm = () => {
+    const errors: Record<string, string> = {};
+    if (!leadForm.fullName.trim()) errors.fullName = "Name is required";
+    if (!leadForm.phone.trim()) errors.phone = "Phone number is required";
+    else if (!/^(\+?234|0)[789]\d{9}$/.test(leadForm.phone.replace(/\s/g, "")))
+      errors.phone = "Enter a valid Nigerian phone number";
+    if (!leadForm.email.trim()) errors.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(leadForm.email))
+      errors.email = "Enter a valid email address";
+    if (!leadForm.city.trim()) errors.city = "City / state is required";
+    setLeadErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateLeadForm() || !result) return;
+    setIsSubmitting(true);
+    try {
+      const regionLabel =
+        pricingConfig.regions[region as keyof typeof pricingConfig.regions]
+          ?.label ?? region;
+      const systemSpec =
+        result.systemType === "generator"
+          ? {
+              type: "Portable Solar Generator",
+              model: result.generatorName,
+              dailyEnergyKwh: (result.dailyEnergyWh / 1000).toFixed(2),
+              estimatedCostMin: result.estimatedCost.min,
+              estimatedCostMax: result.estimatedCost.max,
+            }
+          : {
+              type: "Custom Solar Installation",
+              region: regionLabel,
+              batteryType,
+              dailyEnergyKwh: (result.dailyEnergyWh / 1000).toFixed(2),
+              inverterKva: result.inverterKva,
+              panelWatts: result.panelWattsRequired,
+              batteryAh: result.batteryAhRequired,
+              estimatedCostMin: result.estimatedCost.min,
+              estimatedCostMax: result.estimatedCost.max,
+            };
+
+      const payload = {
+        ...leadForm,
+        region: regionLabel,
+        systemSpec,
+        loads: loads.map((l) => ({
+          name: l.name,
+          watts: l.watts,
+          quantity: l.quantity,
+          hours: l.hours,
+        })),
+      };
+
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Submission failed");
+      router.push("/thank-you");
+    } catch {
+      setLeadErrors({ form: "Something went wrong. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCalculate = () => {
@@ -587,9 +685,36 @@ export default function CalculatorPage() {
                     ₦{Math.round(result.estimatedCost.max).toLocaleString()})
                   </p>
                   <Calculator className="absolute -bottom-10 -right-10 w-64 h-64 text-foreground/5" />
-                  <button className="relative z-10 w-full py-6 bg-primary text-[#1A1A1B] font-black text-xs uppercase tracking-widest hover:opacity-90 transition-all flex items-center justify-center gap-3">
-                    Book Professional Audit <ArrowRight className="w-4 h-4" />
-                  </button>
+                  <div className="relative z-10 flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={() => setShowLeadModal(true)}
+                      className="flex-1 py-6 bg-primary text-[#1A1A1B] font-black text-xs uppercase tracking-widest hover:opacity-90 transition-all flex items-center justify-center gap-3"
+                    >
+                      Get My Exact Quote <ArrowRight className="w-4 h-4" />
+                    </button>
+                    {result && (
+                      <a
+                        href={`https://wa.me/2348000000000?text=${encodeURIComponent(
+                          `Hi Wine Press Solar! I just used your calculator and got a system recommendation:\n\n` +
+                          `📍 Region: ${pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label}\n` +
+                          (result.systemType === "generator"
+                            ? `⚡ System: Portable Solar Generator\n🔋 Model: ${result.generatorName}\n`
+                            : `⚡ System: Custom Solar Installation\n🔆 Solar Array: ${result.panelWattsRequired}W\n🔋 Battery: ${result.batteryAhRequired}Ah (${batteryType})\n🔌 Inverter: ${result.inverterKva}kVA\n`) +
+                          `📊 Daily Load: ${(result.dailyEnergyWh / 1000).toFixed(1)} kWh\n` +
+                          `💰 Est. Cost: ₦${Math.round(result.estimatedCost.min).toLocaleString()} – ₦${Math.round(result.estimatedCost.max).toLocaleString()}\n\n` +
+                          `I'd like to discuss a quote. Can you help?`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="py-6 px-8 border-2 border-primary text-primary font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-[#1A1A1B] transition-all flex items-center justify-center gap-3"
+                      >
+                        <MessageCircle className="w-4 h-4" /> Talk to an Expert
+                      </a>
+                    )}
+                  </div>
+                  <p className="relative z-10 mt-4 text-[9px] text-secondary-text font-bold uppercase tracking-widest">
+                    * This is an indicative estimate. Final pricing depends on site survey, equipment availability, and current market rates.
+                  </p>
                 </div>
 
                 <div className="bg-background border border-border p-10">
@@ -767,6 +892,194 @@ export default function CalculatorPage() {
           </section>
         )}
       </div>
+
+      {/* Lead Capture Modal */}
+      {showLeadModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 animate-fade-in">
+          <div className="bg-background w-full max-w-2xl border-2 border-border rounded-[8px] max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex items-start justify-between p-8 border-b border-border">
+              <div>
+                <h2 className="font-display font-black text-2xl text-foreground uppercase tracking-tighter mb-1">
+                  Get Your Exact Quote
+                </h2>
+                <p className="text-secondary-text text-xs font-bold">
+                  Our team will review your system spec and contact you within 24 hours.
+                </p>
+              </div>
+              <button
+                onClick={() => { setShowLeadModal(false); setLeadErrors({}); }}
+                className="p-2 border border-border rounded-[8px] hover:bg-surface transition-colors ml-4 shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* System Spec Summary */}
+            {result && (
+              <div className="mx-8 mt-6 p-4 bg-surface border border-border rounded-[8px]">
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-primary mb-3">
+                  Your System Spec (auto-attached)
+                </p>
+                <div className="grid grid-cols-2 gap-x-8 gap-y-1">
+                  <div className="text-[10px] text-secondary-text font-bold">Daily Load</div>
+                  <div className="text-[10px] text-foreground font-black">{(result.dailyEnergyWh / 1000).toFixed(1)} kWh</div>
+                  {result.systemType === "custom" ? (
+                    <>
+                      <div className="text-[10px] text-secondary-text font-bold">Inverter</div>
+                      <div className="text-[10px] text-foreground font-black">{result.inverterKva} kVA</div>
+                      <div className="text-[10px] text-secondary-text font-bold">Solar Array</div>
+                      <div className="text-[10px] text-foreground font-black">{result.panelWattsRequired}W</div>
+                      <div className="text-[10px] text-secondary-text font-bold">Battery</div>
+                      <div className="text-[10px] text-foreground font-black">{result.batteryAhRequired}Ah ({batteryType})</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-[10px] text-secondary-text font-bold">System</div>
+                      <div className="text-[10px] text-foreground font-black">{result.generatorName}</div>
+                    </>
+                  )}
+                  <div className="text-[10px] text-secondary-text font-bold">Est. Cost</div>
+                  <div className="text-[10px] text-primary font-black">
+                    ₦{Math.round(result.estimatedCost.min).toLocaleString()} – ₦{Math.round(result.estimatedCost.max).toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Form */}
+            <form onSubmit={handleLeadSubmit} noValidate className="p-8 space-y-5">
+              {leadErrors.form && (
+                <div className="p-4 border border-red-400 bg-red-50 dark:bg-red-900/20 rounded-[8px] text-red-600 dark:text-red-400 text-xs font-bold">
+                  {leadErrors.form}
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {/* Full Name */}
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text flex items-center gap-2">
+                    <User className="w-3 h-3" /> Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={leadForm.fullName}
+                    onChange={(e) => setLeadForm({ ...leadForm, fullName: e.target.value })}
+                    placeholder="e.g. Tunde Williams"
+                    className={`w-full h-12 px-4 bg-surface border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors ${leadErrors.fullName ? "border-red-400" : "border-border"}`}
+                  />
+                  {leadErrors.fullName && <p className="text-red-500 text-[9px] font-bold">{leadErrors.fullName}</p>}
+                </div>
+
+                {/* Phone */}
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text flex items-center gap-2">
+                    <Phone className="w-3 h-3" /> WhatsApp / Phone *
+                  </label>
+                  <input
+                    type="tel"
+                    value={leadForm.phone}
+                    onChange={(e) => setLeadForm({ ...leadForm, phone: e.target.value })}
+                    placeholder="e.g. 08012345678"
+                    className={`w-full h-12 px-4 bg-surface border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors ${leadErrors.phone ? "border-red-400" : "border-border"}`}
+                  />
+                  {leadErrors.phone && <p className="text-red-500 text-[9px] font-bold">{leadErrors.phone}</p>}
+                </div>
+
+                {/* Email */}
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text flex items-center gap-2">
+                    <Mail className="w-3 h-3" /> Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    value={leadForm.email}
+                    onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
+                    placeholder="e.g. tunde@gmail.com"
+                    className={`w-full h-12 px-4 bg-surface border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors ${leadErrors.email ? "border-red-400" : "border-border"}`}
+                  />
+                  {leadErrors.email && <p className="text-red-500 text-[9px] font-bold">{leadErrors.email}</p>}
+                </div>
+
+                {/* City */}
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text flex items-center gap-2">
+                    <MapPin className="w-3 h-3" /> City / State *
+                  </label>
+                  <input
+                    type="text"
+                    value={leadForm.city}
+                    onChange={(e) => setLeadForm({ ...leadForm, city: e.target.value })}
+                    placeholder="e.g. Ikeja, Lagos"
+                    className={`w-full h-12 px-4 bg-surface border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors ${leadErrors.city ? "border-red-400" : "border-border"}`}
+                  />
+                  {leadErrors.city && <p className="text-red-500 text-[9px] font-bold">{leadErrors.city}</p>}
+                </div>
+              </div>
+
+              {/* How did you hear */}
+              <div className="space-y-2">
+                <label className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text">
+                  How did you hear about us? (Optional)
+                </label>
+                <div className="relative">
+                  <select
+                    value={leadForm.source}
+                    onChange={(e) => setLeadForm({ ...leadForm, source: e.target.value })}
+                    className="w-full h-12 px-4 pr-10 bg-surface border border-border rounded-[8px] text-sm font-medium text-foreground focus:outline-none focus:border-primary transition-colors appearance-none"
+                  >
+                    <option value="">Select an option...</option>
+                    {HOW_DID_YOU_HEAR_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary-text pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div className="space-y-2">
+                <label className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text">
+                  Additional Notes (Optional)
+                </label>
+                <textarea
+                  value={leadForm.notes}
+                  onChange={(e) => setLeadForm({ ...leadForm, notes: e.target.value })}
+                  placeholder="e.g. I'd like installation in 2 weeks, or I have questions about financing..."
+                  rows={3}
+                  className="w-full px-4 py-3 bg-surface border border-border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors resize-none"
+                />
+              </div>
+
+              {/* Submit */}
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 btn-flat btn-primary h-14 text-xs uppercase tracking-widest disabled:opacity-60"
+                >
+                  {isSubmitting ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Submitting...</>
+                  ) : (
+                    <><CheckCircle2 className="w-4 h-4" /> Send My Quote Request</>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setShowLeadModal(false); setLeadErrors({}); }}
+                  className="btn-flat btn-outline h-14 px-8 text-xs uppercase tracking-widest"
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <p className="text-[9px] text-secondary-text font-bold text-center leading-relaxed">
+                By submitting, you agree to be contacted by Wine Press Solar Services. We never share your data with third parties.
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

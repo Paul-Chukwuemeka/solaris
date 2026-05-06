@@ -1,0 +1,453 @@
+# Wine Press Solar — Feature Backlog & Fix Register
+
+> Last updated: May 2026  
+> Cross-referenced against: `wine-press-solar-prd-2.md` (v1.0)
+
+---
+
+## Priority Legend
+
+| Symbol | Meaning |
+|--------|---------|
+| 🔴 P0 | Must-have — blocks launch or loses leads |
+| 🟠 P1 | Important — launch or shortly after |
+| 🟡 P2 | Next iteration |
+| 🟢 P3 | Future roadmap |
+| 🐛 BUG | Code defect or broken behaviour |
+| ✅ DONE | Already implemented |
+
+---
+
+## Section 1 — Critical Fixes (P0 Blockers)
+
+### 1.1 Lead Capture — Not Wired
+**Priority:** 🔴 P0  
+**File(s):** `app/calculator/page.tsx`, `app/api/leads/route.ts`  
+**Detail:**  
+The "Book Professional Audit" button on the calculator results page (Step 4) has no `onClick` handler, no form, and no submission logic. The `/api/leads` API route exists but is never called from the frontend. This means zero leads are being captured from the calculator.
+
+**Required work:**
+- Build a lead capture modal/form that fires when the CTA is clicked
+- Form fields per PRD §7: Full name, Phone (WhatsApp), Email, State/City (auto-filled from Step 1), Installation area (optional), How did you hear about us? (optional dropdown), Notes (optional)
+- On submission, POST to `/api/leads` with form data + full system spec silently appended
+- Implement server-side: Zod validation, email notification via Resend/SendGrid, optional CRM webhook
+- Show a thank-you confirmation state after submission
+- Redirect to `/thank-you` page for conversion pixel firing
+
+---
+
+### 1.2 WhatsApp Number is a Placeholder
+**Priority:** 🔴 P0  
+**File(s):** `components/home/Hero.tsx` (line 80), `app/page.tsx` (line 80), `components/FloatingWhatsAppButton.tsx`  
+**Detail:**  
+All three WhatsApp links use the dummy number `2348000000000`. This must be replaced with the real Wine Press WhatsApp Business number before going live.
+
+**Required work:**
+- Replace number in all three locations
+- On the calculator results page, the WhatsApp CTA should send a **pre-filled message** containing the full system spec (PRD §7, Results CTAs): model, daily kWh, inverter kVA, battery Ah, cost range, region
+
+---
+
+### 1.3 Analytics — Not Installed
+**Priority:** 🔴 P0  
+**File(s):** `app/layout.tsx`  
+**Detail:**  
+No Google Analytics 4, Meta Pixel, or Google Tag Manager is present anywhere in the codebase. The PRD (§10.4) lists these as P0 requirements.
+
+**Required work:**
+- Add GTM container snippet to `<head>` and `<body>` in `app/layout.tsx`
+- Configure GA4 inside GTM
+- Configure Meta Pixel inside GTM — fire `PageView`, `Lead`, `ViewContent` standard events
+- Track custom events: `CalculatorStarted`, `CalculatorStepCompleted` (×3), `CalculatorResultViewed`, `WhatsAppButtonClicked`, `QuoteFormSubmitted`
+- Fire Google Ads conversion on `/thank-you` page load
+
+---
+
+### 1.4 Missing `/thank-you` Page
+**Priority:** 🔴 P0  
+**File(s):** `app/` (new file needed)  
+**Detail:**  
+No `/thank-you` route exists. This page is the conversion tracking trigger for Google Ads and Meta Pixel. It must fire after a lead form submission.
+
+**Required work:**
+- Create `app/thank-you/page.tsx`
+- Display a confirmation message with next steps (e.g. "We'll call you within 24 hours")
+- Include WhatsApp CTA as backup contact
+- GTM/GA4 conversion event fires on page load
+
+---
+
+### 1.5 SEO Foundation — Missing
+**Priority:** 🔴 P0  
+**File(s):** `app/layout.tsx`, `app/page.tsx`, `app/calculator/page.tsx`, `public/` (new files needed)  
+**Detail:**  
+Only a basic `<title>` and `<description>` meta tag exist. The PRD (§9) requires a full SEO foundation.
+
+**Required work:**
+- Add JSON-LD structured data for `LocalBusiness`, `Service`, `FAQPage`, `Review` schemas to the home page
+- Add unique `title` and `metaDescription` per page (use Next.js `generateMetadata`)
+- Add Open Graph and Twitter Card meta tags to all pages
+- Create `public/sitemap.xml` (or use `next-sitemap` package)
+- Create `public/robots.txt` — noindex `/calculator` result state (query param or separate route)
+- Add canonical tags
+- Add descriptive `alt` attributes to all `<img>` tags (currently using placeholder alt text)
+- Rename Unsplash image URLs to use descriptive `?auto=format` parameters
+
+---
+
+## Section 2 — Calculator Gaps (P0–P1)
+
+### 2.1 Step Missing: Usage Context (Home / Office / Shop)
+**Priority:** 🟠 P1  
+**File(s):** `app/calculator/page.tsx`  
+**Detail:**  
+PRD Step 1 asks the user to select their installation context (Home, Office/Business, Shop/Retail, Other). This sets copy tone and default appliance presets for subsequent steps. Currently skipped — the calculator jumps straight to region selection.
+
+**Required work:**
+- Add a new Step 0 (or renumber steps) for context selection
+- Use selection to filter/reorder appliance presets on the load step
+- Pass context through to the lead capture form and API payload
+
+---
+
+### 2.2 Only 5 Appliance Presets (PRD Requires 30+)
+**Priority:** 🟠 P1  
+**File(s):** `app/calculator/page.tsx` (lines 27–33)  
+**Detail:**  
+Current presets: LED Bulbs, Smart TV, Standing Fan, Fridge, AC. PRD §7 specifies 8 categories with 30+ appliances.
+
+**Missing categories and appliances:**
+- **Lighting:** LED Bulb 15W, Fluorescent Tube 36W, Security/Flood Light 30W
+- **Cooling:** Ceiling Fan, AC 1.5HP, AC 2HP
+- **Kitchen:** Fridge 250L, Chest Freezer, Blender, Electric Kettle, Microwave
+- **Entertainment:** LED TV 43", LED TV 55", DSTV Decoder, Home Theatre, CCTV System
+- **Computing:** Laptop, Desktop PC, Wi-Fi Router, Network Switch
+- **Water/Utility:** Water Pump 0.5HP, Water Pump 1HP, Washing Machine, Water Dispenser
+- **Office/Business:** Printer/Copier, POS Terminal, Cash Register, Hair Dryer
+- **Other:** Custom appliance (user enters name + wattage manually)
+
+**Required work:**
+- Restructure preset list with category grouping
+- Add custom appliance entry (name + wattage inputs)
+- Show wattage per item on the card
+
+---
+
+### 2.3 Autonomy Days Hardcoded to 1
+**Priority:** 🟠 P1  
+**File(s):** `app/calculator/page.tsx` (lines 79, 133)  
+**Detail:**  
+Battery autonomy is hardcoded to `batteryAutonomyDays: 1` in both `handleCalculate` and the auto-recalculate `useEffect`. The PRD (§7, Step 4) requires a user-selectable autonomy preference: 6h, 12h, 24h, or "full independence."
+
+**Required work:**
+- Add Step 4 (or integrate into Step 3) for autonomy selection
+- Map PRD options to day fractions: 6h = 0.25 days, 12h = 0.5 days, 24h = 1 day, "full independence" = 2–3 days
+- Pass selected value through to `calculateSystem()`
+
+---
+
+### 2.4 No "Talk to an Expert" WhatsApp CTA on Results Page
+**Priority:** 🟠 P1  
+**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+**Detail:**  
+PRD §7 specifies a secondary CTA on the results page: "Talk to an Expert" that opens WhatsApp with a **pre-filled message containing the full system spec**. This is a high-value conversion touchpoint that is currently absent.
+
+**Required work:**
+- Add WhatsApp CTA button to results page (Step 4)
+- Pre-fill message with: region, daily kWh, inverter size, battery type + Ah, panel watts, cost range
+- Use `wa.me/{number}?text={encodedSpec}` URL format
+
+---
+
+### 2.5 No Budget Indicator Step
+**Priority:** 🟡 P2  
+**File(s):** `app/calculator/page.tsx`  
+**Detail:**  
+PRD Step 5 is an optional budget range selector (Under ₦500k / ₦500k–₦1M / ₦1M–₦2.5M / ₦2.5M–₦5M / ₦5M+ / Flexible). Used to flag lead quality and offer budget-aligned system variants.
+
+**Required work:**
+- Add optional budget step before results
+- Include selected budget range in lead payload
+
+---
+
+### 2.6 No Shareable / PDF Result
+**Priority:** 🟡 P2  
+**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+**Detail:**  
+PRD §7 specifies a "Save / Share My Result" CTA described as having "high viral and referral value." Not implemented.
+
+**Required work:**
+- Option A: Generate a shareable URL with system spec encoded as query params
+- Option B: Generate a print-friendly view / PDF using `window.print()` or a library
+- Include Wine Press branding and WhatsApp CTA in the share output
+
+---
+
+### 2.7 "Start Over" Link Missing from Results
+**Priority:** 🟠 P1  
+**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+**Detail:**  
+PRD explicitly requires a non-obtrusive "Start Over" link on the results page. The back button returns to Step 3 but there is no way to reset the entire calculator.
+
+**Required work:**
+- Add a "Start Over" link that resets all state and returns to Step 1
+
+---
+
+### 2.8 No Disclaimer on Results Page
+**Priority:** 🟠 P1  
+**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+**Detail:**  
+PRD §7 requires: *"This is an indicative estimate. Final pricing depends on site survey, equipment availability, and current market rates. Request a free quote for exact pricing."*
+
+**Required work:**
+- Add disclaimer text below cost estimate on the results page
+
+---
+
+## Section 3 — Missing Pages & Routes
+
+### 3.1 `/services` — Individual Service Detail Pages
+**Priority:** 🟠 P1  
+**File(s):** `app/services/` (new)  
+**Detail:**  
+The Services section exists as a home page section but there are no dedicated `/services` routes. The PRD calls for individual pages for Solar Sales, Installation, and Repairs & Maintenance — each with "Learn More" links from the home cards.
+
+**Required work:**
+- Create `app/services/page.tsx` as an overview
+- Optionally create `app/services/installation/page.tsx`, `app/services/sales/page.tsx`, `app/services/maintenance/page.tsx`
+
+---
+
+### 3.2 `/about` — Dedicated About Page
+**Priority:** 🟠 P1  
+**File(s):** `app/about/` (new)  
+**Detail:**  
+"About" exists as an anchor section on the home page, but the PRD calls for a standalone `/about` page with brand story, team photos, and certifications. The nav `#about` link should point to `/about` (or both).
+
+---
+
+### 3.3 `/projects` — Testimonials & Gallery Page
+**Priority:** 🟠 P1  
+**File(s):** `app/projects/` (new)  
+**Detail:**  
+Social proof exists only as a section. PRD calls for a full gallery page (`/projects`) with more project photos and client reviews. Nav "Projects" link currently uses `#projects` anchor.
+
+---
+
+### 3.4 `/blog` — SEO Resource Hub
+**Priority:** 🟠 P1  
+**File(s):** `app/blog/` (new), CMS integration  
+**Detail:**  
+PRD requires a blog with minimum 5 seed articles for SEO at launch. Target keywords include "how many solar panels do I need Nigeria", "solar inverter price Nigeria 2026", "NEPA alternative Nigeria."
+
+**Required work:**
+- Choose CMS: Sanity.io or Contentlayer (per PRD recommendation)
+- Create `app/blog/page.tsx` (listing) and `app/blog/[slug]/page.tsx` (post)
+- Write or source 5 seed articles
+
+---
+
+### 3.5 `/contact` — Lead Capture Page
+**Priority:** 🟠 P1  
+**File(s):** `app/contact/` (new)  
+**Detail:**  
+No standalone contact/quote page exists. The PRD lists `/contact` as a required route with a lead capture form + WhatsApp link. Currently, leads can only come through the calculator (which isn't wired), and the "Chat on WhatsApp" links use a placeholder number.
+
+---
+
+### 3.6 `/faq` — Standalone FAQ Page
+**Priority:** 🟡 P2  
+**File(s):** `app/faq/` (new)  
+**Detail:**  
+FAQ exists as a home page section with only 3 questions. PRD calls for a dedicated `/faq` page that handles pre-purchase objections at scale. Needs 10–15 questions minimum and an FAQPage JSON-LD schema.
+
+---
+
+## Section 4 — UX & Content Issues
+
+### 4.1 Hero Image Uses Unsplash Stock Photography
+**Priority:** 🟠 P1  
+**File(s):** `components/home/Hero.tsx`, `components/home/About.tsx`, `components/home/SocialProof.tsx`  
+**Detail:**  
+The PRD explicitly states: *"Hero image: real project photographs, ideally showing a Lagos/Nigerian residential or office setting. No stock imagery."* All images currently use Unsplash URLs.
+
+**Required work:**
+- Replace with real Wine Press project photos
+- Compress and serve as WebP (use Next.js `<Image>` component with `formats`)
+- Add descriptive alt text to all images
+
+---
+
+### 4.2 All `<img>` Tags Should Use Next.js `<Image>`
+**Priority:** 🟠 P1  
+**File(s):** `components/home/Hero.tsx`, `components/home/About.tsx`, `components/home/SocialProof.tsx`  
+**Detail:**  
+All image tags use plain `<img>`, not Next.js `<Image>`. This misses automatic WebP conversion, lazy loading, and Core Web Vitals (LCP/CLS) optimisation.
+
+---
+
+### 4.3 Footer Contact Info is Placeholder
+**Priority:** 🔴 P0  
+**File(s):** `components/Footer.tsx` (lines 50–59)  
+**Detail:**  
+Address: "123 Solar Way, Victoria Island", Phone: "+234 800 SOLAR LIFE", Email: "hello@winepresssolar.com", RC: "123456789" — all fake.
+
+---
+
+### 4.4 Social Media Links in Footer are `href="#"`
+**Priority:** 🟠 P1  
+**File(s):** `components/Footer.tsx` (line 26)  
+**Detail:**  
+The Globe, Camera, and Briefcase icons (meant for website, Instagram, LinkedIn) all link to `#`. Should link to real social profiles once known.
+
+---
+
+### 4.5 Services Cards Have No "Learn More" Links
+**Priority:** 🟠 P1  
+**File(s):** `components/home/Services.tsx`  
+**Detail:**  
+PRD §6.3 requires each service card to have a "Learn More" link to the full services page. Currently cards have no link or CTA at all.
+
+---
+
+### 4.6 Only 2 Testimonials — PRD Requires 3–5
+**Priority:** 🟠 P1  
+**File(s):** `components/home/SocialProof.tsx`  
+**Detail:**  
+Only two testimonials are hardcoded. PRD requires 3–5 with real names, locations, and photos where available. Currently there are no photos — only initial-based avatars.
+
+---
+
+### 4.7 No "How It Works" Process Section
+**Priority:** 🟠 P1  
+**File(s):** `app/page.tsx`, `components/home/` (new component)  
+**Detail:**  
+PRD §6.4 specifies a 3–4 step visual process section on the home page showing the journey from calculator → quote → install → support. This section is absent.
+
+---
+
+### 4.8 No Sticky Mobile Footer Bar
+**Priority:** 🟡 P2  
+**File(s):** `app/layout.tsx` or new component  
+**Detail:**  
+PRD §10.1 CRO requirement: *"Sticky mobile footer bar: WhatsApp CTA and Calculator CTA always visible."* Not implemented.
+
+---
+
+### 4.9 No Google Review Rating Widget
+**Priority:** 🟠 P1  
+**File(s):** `components/home/SocialProof.tsx`  
+**Detail:**  
+PRD §6.2 calls for a Google review rating widget or star rating with review count in the Social Proof section.
+
+---
+
+### 4.10 No ROI Mini-Calculator on Landing Page
+**Priority:** 🟡 P2  
+**File(s):** `components/home/ROI.tsx`  
+**Detail:**  
+PRD §6.5 mentions an optional embedded mini-calculator: "Enter your monthly fuel spend → see your projected annual savings." The current ROI section uses static hardcoded numbers (₦7.2M vs ₦2.8M).
+
+---
+
+### 4.11 No "Limited Slots" Urgency/Scarcity Element
+**Priority:** 🟡 P2  
+**File(s):** `app/page.tsx` (final CTA section)  
+**Detail:**  
+PRD §6.6 suggests an urgency element: "Limited slots for June installation. Book now." Can be toggled on/off easily.
+
+---
+
+## Section 5 — Technical / Code Issues
+
+### 5.1 Duplicate `html` and `body` Blocks in `globals.css`
+**Priority:** 🐛 BUG  
+**File(s):** `app/globals.css` (lines 46–57 and 93–103)  
+**Detail:**  
+`html { scroll-behavior: smooth; }` and `body { background: ...; color: ...; }` blocks appear twice. The second `body` block overrides the first (which has the dot-grid `background-image`), potentially stripping the dot-grid pattern on some pages.
+
+**Fix:** Remove the duplicate `html` and `body` declarations at lines 93–103.
+
+---
+
+### 5.2 `calculateSystem()` Call with `as any` Type Cast
+**Priority:** 🐛 BUG  
+**File(s):** `app/calculator/page.tsx` (line 275)  
+**Detail:**  
+`addLoad(l as any)` is called when the `+` button is clicked in the load list — casting a `LoadItem` to `(typeof PRESET_LOADS)[0]`. This works by coincidence (the `name` field matches) but is type-unsafe and will break if the data shapes diverge.
+
+**Fix:** Create a proper handler that increments quantity directly rather than calling `addLoad`.
+
+---
+
+### 5.3 `setRegion` Uses `as any` Type Cast
+**Priority:** 🐛 BUG  
+**File(s):** `app/calculator/page.tsx` (line 167)  
+**Detail:**  
+`setRegion(key as any)` when selecting a region card. Should be typed as `keyof typeof pricingConfig.regions`.
+
+---
+
+### 5.4 No `<Image>` Component Used Anywhere
+**Priority:** 🟠 P1  
+See item 4.2 above.
+
+---
+
+### 5.5 No `robots.txt` or `sitemap.xml`
+**Priority:** 🔴 P0  
+See item 1.5 above.
+
+---
+
+### 5.6 No reCAPTCHA on Lead Form
+**Priority:** 🟠 P1  
+**File(s):** `app/api/leads/route.ts` (future lead form)  
+**Detail:**  
+PRD §14.3 requires reCAPTCHA v3 on the lead form to prevent spam.
+
+---
+
+### 5.7 No Environment Variable Setup
+**Priority:** 🟠 P1  
+**File(s):** Root (new `.env.local.example`)  
+**Detail:**  
+No `.env` example file exists. Once email sending, analytics, and reCAPTCHA are added, there will be multiple API keys. An `.env.local.example` should be committed to document required variables.
+
+---
+
+### 5.8 `eslint` Script Has No Entry Point
+**Priority:** 🐛 BUG  
+**File(s):** `package.json` (line 9)  
+**Detail:**  
+`"lint": "eslint"` with no path argument will error in newer ESLint versions. Should be `"lint": "next lint"` to use Next.js's built-in ESLint config.
+
+---
+
+## Section 6 — Future Roadmap (P3)
+
+| Feature | Notes |
+|---|---|
+| CRM Integration | Auto-create leads in HubSpot/Zoho/Pipedrive via webhook from `/api/leads` |
+| Client Portal | Order tracking, warranty documents, service history per customer |
+| E-commerce Checkout | Online deposit or full payment for installation booking |
+| Admin Price Table UI | Non-technical interface to update `pricing-config.json` values without code changes |
+| WhatsApp Business API | Automated responses and lead follow-up for v2.0 |
+| A/B Testing | Hero headline and CTA copy variation via GTM or VWO |
+| Financing / Instalment Info | High-impact CRO element — show payment flexibility if Wine Press offers it |
+| Partner Logo Strip | Equipment brand partnerships (Luminous, Felicity, etc.) in Social Proof section |
+
+---
+
+## Summary Counts
+
+| Priority | Count |
+|---|---|
+| 🔴 P0 — Launch blockers | 7 |
+| 🟠 P1 — Important | 17 |
+| 🟡 P2 — Next iteration | 6 |
+| 🟢 P3 — Roadmap | 8 |
+| 🐛 Bugs | 4 |
+| **Total** | **42** |
