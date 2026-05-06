@@ -1145,11 +1145,15 @@ export default function CalculatorClient() {
                       <a
                         href={`https://wa.me/2349166301384?text=${encodeURIComponent(
                           `Hi Wine Press Solar! I just used your calculator and got a system recommendation:\n\n` +
-                          `📍 Region: ${pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label}\n` +
                           (result.systemType === "generator"
                             ? `⚡ System: Portable Solar Generator\n🔋 Model: ${result.generatorName}\n`
-                            : `⚡ System: Custom Solar Installation\n🔆 Solar Array: ${result.panelWattsRequired}W\n🔋 Battery: ${result.batteryAhRequired}Ah (${batteryType})\n🔌 Inverter: ${result.inverterKva}kVA\n`) +
+                            : `⚡ System: Custom Solar Installation\n` +
+                              `🔆 Solar Array: ${result.panelWattsRequired}W (${Math.ceil(result.panelWattsRequired / 500)} × 500W panels)\n` +
+                              `🔋 Battery: ${result.batteryAhRequired}Ah ${batteryType} (${Math.ceil(result.batteryAhRequired / 200)} × 200Ah units)\n` +
+                              `🔌 Inverter: ${result.inverterKva}kVA\n` +
+                              `⏱ Backup Duration: ${AUTONOMY_OPTIONS.find((o) => o.days === autonomyDays)?.label ?? `${autonomyDays}d`}\n`) +
                           `📊 Daily Load: ${(result.dailyEnergyWh / 1000).toFixed(1)} kWh\n` +
+                          `📍 Region: ${pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label}\n` +
                           `💰 Est. Cost: ₦${Math.round(result.estimatedCost.min).toLocaleString()} – ₦${Math.round(result.estimatedCost.max).toLocaleString()}\n\n` +
                           `I'd like to discuss a quote. Can you help?`
                         )}`}

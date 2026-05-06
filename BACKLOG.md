@@ -92,29 +92,19 @@ Replaced flat 5-item list with 7 category tabs and 30 preset appliances. Categor
 
 ---
 
-### 2.3 Autonomy Days Hardcoded to 1
-**Priority:** 🟠 P1  
-**File(s):** `app/calculator/page.tsx` (lines 79, 133)  
+### ✅ 2.3 Autonomy Days Hardcoded to 1
+**Priority:** 🟠 P1 → ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-Battery autonomy is hardcoded to `batteryAutonomyDays: 1` in both `handleCalculate` and the auto-recalculate `useEffect`. The PRD (§7, Step 4) requires a user-selectable autonomy preference: 6h, 12h, 24h, or "full independence."
-
-**Required work:**
-- Add Step 4 (or integrate into Step 3) for autonomy selection
-- Map PRD options to day fractions: 6h = 0.25 days, 12h = 0.5 days, 24h = 1 day, "full independence" = 2–3 days
-- Pass selected value through to `calculateSystem()`
+Added Step 4 "How Long Should Your Battery Last?" — a dedicated autonomy selection screen between battery type and results (custom installs only). Four options: 6h (0.25 days), 12h (0.5 days), 24h (1 day), Full Independence (2 days). `autonomyDays` state wired into `handleCalculate` and the auto-recalculate effect. Progress bar expanded to 6 segments. Results step shifted to step 6. Backup Duration shown in System Specifications on the results page.
 
 ---
 
-### 2.4 No "Talk to an Expert" WhatsApp CTA on Results Page
-**Priority:** 🟠 P1  
-**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+### ✅ 2.4 No "Talk to an Expert" WhatsApp CTA on Results Page
+**Priority:** 🟠 P1 → ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-PRD §7 specifies a secondary CTA on the results page: "Talk to an Expert" that opens WhatsApp with a **pre-filled message containing the full system spec**. This is a high-value conversion touchpoint that is currently absent.
-
-**Required work:**
-- Add WhatsApp CTA button to results page (Step 4)
-- Pre-fill message with: region, daily kWh, inverter size, battery type + Ah, panel watts, cost range
-- Use `wa.me/{number}?text={encodedSpec}` URL format
+"Talk to an Expert" WhatsApp CTA was already implemented as part of BACKLOG-1.2. Enhanced in this ticket to include panel count (N × 500W), battery count (N × 200Ah), backup duration (from autonomy step), and region — giving the team a complete spec snapshot in the WhatsApp pre-fill message.
 
 ---
 
