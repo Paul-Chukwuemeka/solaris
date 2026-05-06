@@ -159,10 +159,10 @@ Created a full `/about` standalone page with: hero (brand story + CTAs), stats s
 ---
 
 ### 3.3 `/projects` — Testimonials & Gallery Page
-**Priority:** 🟠 P1  
-**File(s):** `app/projects/` (new)  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/projects/page.tsx`, `components/home/SocialProof.tsx`, `components/Navigation.tsx`  
 **Detail:**  
-Social proof exists only as a section. PRD calls for a full gallery page (`/projects`) with more project photos and client reviews. Nav "Projects" link currently uses `#projects` anchor.
+Created full `/projects` page with: hero + stats strip, 9-project gallery grid (Residential, Commercial, Institutional, Estate, SME, Healthcare types) with hover greyscale-to-colour effect, and 6 expanded testimonial cards with reviewer roles. Nav "Projects" link updated to `/projects`. Home SocialProof section gains "View All Projects →" link.
 
 ---
 

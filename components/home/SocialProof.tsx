@@ -1,5 +1,6 @@
 import React from "react";
-import { Star, Quote, MapPin } from "lucide-react";
+import Link from "next/link";
+import { Star, Quote, MapPin, ArrowRight } from "lucide-react";
 
 export default function SocialProof() {
   const testimonials = [
@@ -52,9 +53,17 @@ export default function SocialProof() {
               <span className="text-primary">Solar-Powered Nigerians.</span>
             </h2>
           </div>
-          <p className="text-secondary-text max-w-sm text-sm font-medium">
-            Solid installations that deliver power independence across residential and commercial sectors.
-          </p>
+          <div className="flex flex-col items-start md:items-end gap-4">
+            <p className="text-secondary-text max-w-sm text-sm font-medium">
+              Solid installations that deliver power independence across residential and commercial sectors.
+            </p>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:text-foreground transition-colors"
+            >
+              View All Projects <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
         {/* Project Gallery - Flat Grid */}
