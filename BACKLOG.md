@@ -167,15 +167,10 @@ Created full `/projects` page with: hero + stats strip, 9-project gallery grid (
 ---
 
 ### 3.4 `/blog` — SEO Resource Hub
-**Priority:** 🟠 P1  
-**File(s):** `app/blog/` (new), CMS integration  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/blog/page.tsx`, `app/blog/[slug]/page.tsx`, `content/blog/*.mdx`, `lib/posts.ts`, `mdx-components.tsx`, `next.config.ts`  
 **Detail:**  
-PRD requires a blog with minimum 5 seed articles for SEO at launch. Target keywords include "how many solar panels do I need Nigeria", "solar inverter price Nigeria 2026", "NEPA alternative Nigeria."
-
-**Required work:**
-- Choose CMS: Sanity.io or Contentlayer (per PRD recommendation)
-- Create `app/blog/page.tsx` (listing) and `app/blog/[slug]/page.tsx` (post)
-- Write or source 5 seed articles
+Implemented a static MDX blog with `@next/mdx`. No external CMS required — articles are local `.mdx` files in `content/blog/`. Post metadata index lives in `lib/posts.ts`. All 5 target SEO articles written and rendered as fully static SSG pages. Post layout has article content, author note, sidebar with calculator CTA and WhatsApp link, and related posts. Blog listing shows newest-first with featured post hero + article grid.
 
 ---
 
