@@ -36,15 +36,11 @@ The "Book Professional Audit" button on the calculator results page (Step 4) has
 
 ---
 
-### 1.2 WhatsApp Number is a Placeholder
-**Priority:** 🔴 P0  
-**File(s):** `components/home/Hero.tsx` (line 80), `app/page.tsx` (line 80), `components/FloatingWhatsAppButton.tsx`  
+### ✅ 1.2 WhatsApp Number is a Placeholder
+**Priority:** 🔴 P0 → ✅ DONE  
+**File(s):** `app/page.tsx`, `components/FloatingWhatsAppButton.tsx`, `app/calculator/page.tsx`, `app/thank-you/page.tsx`  
 **Detail:**  
-All three WhatsApp links use the dummy number `2348000000000`. This must be replaced with the real Wine Press WhatsApp Business number before going live.
-
-**Required work:**
-- Replace number in all three locations
-- On the calculator results page, the WhatsApp CTA should send a **pre-filled message** containing the full system spec (PRD §7, Results CTAs): model, daily kWh, inverter kVA, battery Ah, cost range, region
+All WhatsApp links updated from placeholder `2348000000000` to real number `2349166301384` (Wine Press Solar, +234 916 630 1384). Calculator results "Talk to an Expert" CTA pre-fills a WhatsApp message with the full system spec (region, daily kWh, inverter kVA, battery Ah, panel watts, cost range).
 
 ---
 
