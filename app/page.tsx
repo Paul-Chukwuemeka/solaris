@@ -3,8 +3,9 @@ import SocialProof from "@/components/home/SocialProof";
 import Services from "@/components/home/Services";
 import About from "@/components/home/About";
 import ROI from "@/components/home/ROI";
-import { HelpCircle, ChevronDown, MessageCircle, ArrowRight } from "lucide-react";
+import { HelpCircle, ChevronDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function Home() {
   const faqs = [
@@ -77,10 +78,7 @@ export default function Home() {
               Get Your Solar Plan
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <a href="https://wa.me/2349166301384" className="btn-flat btn-outline h-16 px-12 text-sm uppercase tracking-widest">
-              <MessageCircle className="w-5 h-5" />
-              Chat on WhatsApp
-            </a>
+            <WhatsAppLink source="home-cta" className="btn-flat btn-outline h-16 px-12 text-sm uppercase tracking-widest" />
           </div>
         </div>
       </section>

@@ -44,18 +44,11 @@ All WhatsApp links updated from placeholder `2348000000000` to real number `2349
 
 ---
 
-### 1.3 Analytics — Not Installed
-**Priority:** 🔴 P0  
-**File(s):** `app/layout.tsx`  
+### ✅ 1.3 Analytics — Not Installed
+**Priority:** 🔴 P0 → ✅ DONE  
+**File(s):** `app/layout.tsx`, `lib/analytics.ts`, `components/ConversionTracker.tsx`, `components/WhatsAppLink.tsx`, `.env.local.example`  
 **Detail:**  
-No Google Analytics 4, Meta Pixel, or Google Tag Manager is present anywhere in the codebase. The PRD (§10.4) lists these as P0 requirements.
-
-**Required work:**
-- Add GTM container snippet to `<head>` and `<body>` in `app/layout.tsx`
-- Configure GA4 inside GTM
-- Configure Meta Pixel inside GTM — fire `PageView`, `Lead`, `ViewContent` standard events
-- Track custom events: `CalculatorStarted`, `CalculatorStepCompleted` (×3), `CalculatorResultViewed`, `WhatsAppButtonClicked`, `QuoteFormSubmitted`
-- Fire Google Ads conversion on `/thank-you` page load
+GTM snippet wired into `app/layout.tsx` via `next/script` (afterInteractive). Snippet is conditioned on `NEXT_PUBLIC_GTM_ID` env var — safe no-op in dev without it. `lib/analytics.ts` provides typed `dataLayer` push helpers. All required events verified firing correctly via Playwright: `CalculatorStarted`, `CalculatorStepCompleted` (×3), `CalculatorResultViewed` (with region/cost data), `WhatsAppButtonClicked` (floating button + calculator CTA), `QuoteFormSubmitted`, `Lead` (fires on /thank-you via `ConversionTracker`). `.env.local.example` created documenting all keys.
 
 ---
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, MessageCircle, ArrowRight, Calculator, Clock, Phone } from "lucide-react";
 import type { Metadata } from "next";
+import ConversionTracker from "@/components/ConversionTracker";
 
 export const metadata: Metadata = {
   title: "Quote Request Received | Wine Press Solar Services",
@@ -33,6 +34,7 @@ const NEXT_STEPS = [
 export default function ThankYouPage() {
   return (
     <main className="min-h-screen bg-background pt-32 pb-24 px-6">
+      <ConversionTracker />
       <div className="max-w-3xl mx-auto">
 
         {/* Hero confirmation block */}

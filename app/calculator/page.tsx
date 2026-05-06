@@ -30,6 +30,13 @@ import {
   CalculationResult,
 } from "@/lib/solar-engine";
 import pricingConfig from "@/lib/pricing-config.json";
+import {
+  trackCalculatorStarted,
+  trackCalculatorStepCompleted,
+  trackCalculatorResultViewed,
+  trackQuoteFormSubmitted,
+  trackWhatsAppButtonClicked,
+} from "@/lib/analytics";
 
 const HOW_DID_YOU_HEAR_OPTIONS = [
   "Google Search",
@@ -76,6 +83,11 @@ export default function CalculatorPage() {
   const [leadErrors, setLeadErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+
+  // Fire once on mount
+  useEffect(() => {
+    trackCalculatorStarted();
+  }, []);
 
   // Auto-select recommended generator when load changes or step changes
   useEffect(() => {
@@ -213,6 +225,10 @@ export default function CalculatorPage() {
       });
 
       if (!res.ok) throw new Error("Submission failed");
+      trackQuoteFormSubmitted({
+        region: pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label ?? region,
+        systemType: result.systemType,
+      });
       router.push("/thank-you");
     } catch {
       setLeadErrors({ form: "Something went wrong. Please try again." });
@@ -232,6 +248,14 @@ export default function CalculatorPage() {
       batteryAutonomyDays: 1,
     });
     setResult(res);
+    trackCalculatorStepCompleted(3, "Battery / System Preference Set");
+    trackCalculatorResultViewed({
+      region: pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label ?? region,
+      systemType: res.systemType,
+      dailyKwh: parseFloat((res.dailyEnergyWh / 1000).toFixed(2)),
+      estimatedCostMin: res.estimatedCost.min,
+      estimatedCostMax: res.estimatedCost.max,
+    });
     setStep(4);
   };
 
@@ -291,7 +315,10 @@ export default function CalculatorPage() {
             </div>
 
             <button
-              onClick={() => setStep(2)}
+              onClick={() => {
+                trackCalculatorStepCompleted(1, "Region Selected");
+                setStep(2);
+              }}
               className="btn-flat btn-primary h-14 px-10 w-full sm:w-auto"
             >
               Continue to Load Setup
@@ -399,6 +426,7 @@ export default function CalculatorPage() {
               </button>
               <button
                 onClick={() => {
+                  trackCalculatorStepCompleted(2, "Loads Configured");
                   const dailyWh = loads.reduce(
                     (sum, item) =>
                       sum + item.watts * item.quantity * item.hours,
@@ -713,6 +741,7 @@ export default function CalculatorPage() {
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackWhatsAppButtonClicked("calculator-results")}
                         className="py-6 px-8 border-2 border-primary text-primary font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-[#1A1A1B] transition-all flex items-center justify-center gap-3"
                       >
                         <MessageCircle className="w-4 h-4" /> Talk to an Expert

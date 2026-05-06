@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import { MessageCircle } from "lucide-react";
+import { trackWhatsAppButtonClicked } from "@/lib/analytics";
 
 export default function FloatingWhatsAppButton() {
   const phoneNumber = "2349166301384";
@@ -12,6 +15,7 @@ export default function FloatingWhatsAppButton() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackWhatsAppButtonClicked("floating-button")}
       className="fixed bottom-8 right-8 z-[60] group"
       aria-label="Contact us on WhatsApp"
     >
