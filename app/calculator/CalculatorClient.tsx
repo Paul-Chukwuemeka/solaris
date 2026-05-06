@@ -38,6 +38,7 @@ import {
   Cctv,
   Speaker,
   Plug,
+  BatteryCharging,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -212,6 +213,37 @@ const PRESET_CATEGORIES: PresetCategory[] = [
   },
 ];
 
+const AUTONOMY_OPTIONS = [
+  {
+    id: "6h",
+    label: "6 Hours",
+    sublabel: "Essential backup — lights, phone, fan",
+    days: 0.25,
+    icon: "⚡",
+  },
+  {
+    id: "12h",
+    label: "12 Hours",
+    sublabel: "Half-day comfort — TV, fridge, basics",
+    days: 0.5,
+    icon: "🌗",
+  },
+  {
+    id: "24h",
+    label: "24 Hours",
+    sublabel: "Full-day independence — all appliances",
+    days: 1,
+    icon: "☀️",
+  },
+  {
+    id: "full",
+    label: "Full Independence",
+    sublabel: "2 days backup — generator-free living",
+    days: 2,
+    icon: "🏆",
+  },
+];
+
 export default function CalculatorClient() {
   const [step, setStep] = useState(0);
   const [installationContext, setInstallationContext] = useState<InstallationContext | null>(null);
@@ -243,6 +275,7 @@ export default function CalculatorClient() {
   const [activeCategory, setActiveCategory] = useState<string>(PRESET_CATEGORIES[0].id);
   const [customName, setCustomName] = useState("");
   const [customWatts, setCustomWatts] = useState("");
+  const [autonomyDays, setAutonomyDays] = useState<number>(1);
   const router = useRouter();
 
   // Fire once on mount
@@ -252,7 +285,7 @@ export default function CalculatorClient() {
 
   // Auto-select recommended generator when load changes or step changes
   useEffect(() => {
-    if (systemPreference !== "generator" || step !== 4) return;
+    if (systemPreference !== "generator" || step !== 3) return;
 
     const dailyWh = loads.reduce(
       (sum, item) => sum + item.watts * item.quantity * item.hours,
@@ -271,7 +304,7 @@ export default function CalculatorClient() {
 
   // Auto-recalculate when loads change on the results page
   useEffect(() => {
-    if (step !== 5) return;
+    if (step !== 6) return;
     const id = setTimeout(() => {
       const res = calculateSystem({
         loads,
@@ -280,12 +313,12 @@ export default function CalculatorClient() {
         systemTypePreference: systemPreference,
         selectedGeneratorName: selectedGenerator || undefined,
         systemVoltage: 48,
-        batteryAutonomyDays: 1,
+        batteryAutonomyDays: autonomyDays,
       });
       setResult(res);
     }, 0);
     return () => clearTimeout(id);
-  }, [loads, region, batteryType, systemPreference, selectedGenerator, step]);
+  }, [loads, region, batteryType, systemPreference, selectedGenerator, autonomyDays, step]);
 
   const addLoad = (preset: PresetAppliance) => {
     const existing = loads.find((l) => l.name === preset.name);
@@ -424,10 +457,10 @@ export default function CalculatorClient() {
       systemTypePreference: systemPreference,
       selectedGeneratorName: selectedGenerator || undefined,
       systemVoltage: 48,
-      batteryAutonomyDays: 1,
+      batteryAutonomyDays: autonomyDays,
     });
     setResult(res);
-    trackCalculatorStepCompleted(4, "Battery / System Preference Set");
+    trackCalculatorStepCompleted(5, "Autonomy & System Preference Set");
     trackCalculatorResultViewed({
       region: pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label ?? region,
       systemType: res.systemType,
@@ -435,15 +468,15 @@ export default function CalculatorClient() {
       estimatedCostMin: res.estimatedCost.min,
       estimatedCostMax: res.estimatedCost.max,
     });
-    setStep(5);
+    setStep(6);
   };
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
-        {/* Progress Bar - 5 steps */}
+        {/* Progress Bar - 6 steps (0-5, results is step 6) */}
         <div className="flex gap-2 mb-12">
-          {[0, 1, 2, 3, 4].map((s) => (
+          {[0, 1, 2, 3, 4, 5].map((s) => (
             <div
               key={s}
               className={`h-1.5 flex-1 rounded-[2px] transition-colors ${step > s ? "bg-primary" : step === s ? "bg-primary/60" : "bg-surface border border-border"}`}
@@ -656,7 +689,7 @@ export default function CalculatorClient() {
                       </div>
                       <div className="flex items-center gap-10">
                         <div className="flex flex-col gap-2">
-                          <label className="text-[9px] font-black uppercase tracking-[0.1em] text-secondary-text">
+                          <label className="text-[9px] font-black uppercase tracking-widest text-secondary-text">
                             Runtime (Hrs)
                           </label>
                           <input
@@ -932,19 +965,102 @@ export default function CalculatorClient() {
                 <ArrowLeft className="w-5 h-5" /> Back
               </button>
               <button
-                onClick={handleCalculate}
+                onClick={() => {
+                  if (systemPreference === "generator") {
+                    handleCalculate();
+                  } else {
+                    trackCalculatorStepCompleted(3, "Battery Type Set");
+                    setStep(4);
+                  }
+                }}
                 className="btn-flat btn-primary h-14 px-10 flex-1"
               >
                 {systemPreference === "generator"
                   ? "View Final Report"
-                  : "Calculate My System"}
+                  : "Set Backup Duration"}
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </section>
         )}
 
-        {step === 5 && result && (
+        {step === 4 && systemPreference === "custom" && (
+          <section className="animate-fade-in max-w-4xl">
+            <h2 className="font-display font-black text-4xl md:text-5xl text-foreground mb-4 uppercase tracking-tighter">
+              How Long Should Your Battery Last?
+            </h2>
+            <p className="text-secondary-text mb-12 font-medium">
+              Choose your backup duration. Longer autonomy means more battery storage — and a bigger but more resilient system.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+              {AUTONOMY_OPTIONS.map((opt) => {
+                const isSelected = autonomyDays === opt.days;
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() => setAutonomyDays(opt.days)}
+                    className={`p-8 text-left border-4 rounded-[8px] transition-all relative group ${
+                      isSelected
+                        ? "border-primary bg-surface"
+                        : "border-border bg-background hover:border-primary/40"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-3xl">{opt.icon}</span>
+                      <div>
+                        <h3 className="font-black text-xl text-foreground uppercase tracking-tighter">
+                          {opt.label}
+                        </h3>
+                        <p className="text-[10px] font-bold text-secondary-text uppercase tracking-widest">
+                          {opt.days < 1
+                            ? `${opt.days * 24}h autonomy`
+                            : `${opt.days === 1 ? "1 day" : `${opt.days} days`} autonomy`}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-secondary-text leading-relaxed">
+                      {opt.sublabel}
+                    </p>
+                    {isSelected && (
+                      <div className="absolute top-4 right-4 text-primary">
+                        <CheckCircle2 className="w-5 h-5" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="bg-surface border border-border rounded-[8px] p-6 mb-10 flex items-start gap-4">
+              <BatteryCharging className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <p className="text-xs text-secondary-text font-medium leading-relaxed">
+                <span className="text-foreground font-bold">How it works: </span>
+                Your battery bank is sized to power your selected appliances for the chosen duration with no solar input (e.g. at night or on cloudy days). More autonomy = more batteries = higher upfront cost but greater energy independence.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => setStep(3)}
+                className="btn-flat btn-outline h-14 px-8"
+              >
+                <ArrowLeft className="w-5 h-5" /> Back
+              </button>
+              <button
+                onClick={() => {
+                  trackCalculatorStepCompleted(4, `Autonomy: ${AUTONOMY_OPTIONS.find((o) => o.days === autonomyDays)?.label ?? autonomyDays}`);
+                  handleCalculate();
+                }}
+                className="btn-flat btn-primary h-14 px-10 flex-1"
+              >
+                Calculate My System <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          </section>
+        )}
+
+        {step === 6 && result && (
           <section className="animate-fade-in max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
@@ -1111,6 +1227,16 @@ export default function CalculatorClient() {
                             : batteryType}
                         </span>
                       </div>
+                      {result.systemType === "custom" && (
+                        <div className="flex justify-between items-center border-b border-border pb-4">
+                          <span className="text-xs font-bold text-secondary-text uppercase tracking-widest">
+                            Backup Duration
+                          </span>
+                          <span className="font-black text-foreground text-sm">
+                            {AUTONOMY_OPTIONS.find((o) => o.days === autonomyDays)?.label ?? `${autonomyDays}d`}
+                          </span>
+                        </div>
+                      )}
                     </div>
                     <div className="bg-surface p-6 rounded-[8px]">
                       <h4 className="font-black text-[9px] uppercase tracking-widest text-secondary-text mb-4">
@@ -1164,7 +1290,7 @@ export default function CalculatorClient() {
 
                 <div className="mt-8 flex gap-4">
                   <button
-                    onClick={() => setStep(3)}
+                    onClick={() => setStep(systemPreference === "generator" ? 3 : 4)}
                     className="btn-flat btn-outline h-14 px-8"
                   >
                     <ArrowLeft className="w-5 h-5" /> Back
