@@ -21,6 +21,10 @@ import {
   Phone,
   Mail,
   ChevronDown,
+  Home,
+  Building2,
+  ShoppingBag,
+  HelpCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -37,6 +41,59 @@ import {
   trackQuoteFormSubmitted,
   trackWhatsAppButtonClicked,
 } from "@/lib/analytics";
+
+type InstallationContext = "home" | "office" | "shop" | "other";
+
+const INSTALLATION_CONTEXTS: {
+  id: InstallationContext;
+  label: string;
+  sublabel: string;
+  icon: React.ElementType;
+}[] = [
+  {
+    id: "home",
+    label: "Home / Residence",
+    sublabel: "Apartment, bungalow, duplex, or estate",
+    icon: Home,
+  },
+  {
+    id: "office",
+    label: "Office / Business",
+    sublabel: "Corporate office, co-working, or workspace",
+    icon: Building2,
+  },
+  {
+    id: "shop",
+    label: "Shop / Retail",
+    sublabel: "Store, pharmacy, supermarket, or kiosk",
+    icon: ShoppingBag,
+  },
+  {
+    id: "other",
+    label: "Other / Not Sure",
+    sublabel: "Farm, school, place of worship, or mixed use",
+    icon: HelpCircle,
+  },
+];
+
+const CONTEXT_COPY: Record<InstallationContext, { heading: string; sub: string }> = {
+  home: {
+    heading: "What appliances are you powering?",
+    sub: "Select everything you want to run on solar at home.",
+  },
+  office: {
+    heading: "What office equipment needs power?",
+    sub: "Select all equipment that should run on solar in your workspace.",
+  },
+  shop: {
+    heading: "What does your business need to power?",
+    sub: "Select all equipment and appliances in your shop or store.",
+  },
+  other: {
+    heading: "What are we powering?",
+    sub: "Select all appliances and equipment that need solar power.",
+  },
+};
 
 const HOW_DID_YOU_HEAR_OPTIONS = [
   "Google Search",
@@ -56,7 +113,8 @@ const PRESET_LOADS = [
 ];
 
 export default function CalculatorClient() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
+  const [installationContext, setInstallationContext] = useState<InstallationContext | null>(null);
   const [region, setRegion] =
     useState<keyof typeof pricingConfig.regions>("enugu");
   const [batteryType, setBatteryType] = useState<"lithium" | "tubular">(
@@ -91,7 +149,7 @@ export default function CalculatorClient() {
 
   // Auto-select recommended generator when load changes or step changes
   useEffect(() => {
-    if (systemPreference === "generator" && step === 3) {
+    if (systemPreference === "generator" && step === 4) {
       const dailyWh = loads.reduce(
         (sum, item) => sum + item.watts * item.quantity * item.hours,
         0,
@@ -109,7 +167,7 @@ export default function CalculatorClient() {
 
   // Auto-recalculate when loads change on the results page
   useEffect(() => {
-    if (step === 4) {
+    if (step === 5) {
       const res = calculateSystem({
         loads,
         region,
@@ -208,6 +266,7 @@ export default function CalculatorClient() {
 
       const payload = {
         ...leadForm,
+        installationContext: installationContext ?? "other",
         region: regionLabel,
         systemSpec,
         loads: loads.map((l) => ({
@@ -248,7 +307,7 @@ export default function CalculatorClient() {
       batteryAutonomyDays: 1,
     });
     setResult(res);
-    trackCalculatorStepCompleted(3, "Battery / System Preference Set");
+    trackCalculatorStepCompleted(4, "Battery / System Preference Set");
     trackCalculatorResultViewed({
       region: pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label ?? region,
       systemType: res.systemType,
@@ -256,21 +315,56 @@ export default function CalculatorClient() {
       estimatedCostMin: res.estimatedCost.min,
       estimatedCostMax: res.estimatedCost.max,
     });
-    setStep(4);
+    setStep(5);
   };
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
-        {/* Progress Bar - Flat */}
+        {/* Progress Bar - 5 steps */}
         <div className="flex gap-2 mb-12">
-          {[1, 2, 3, 4].map((s) => (
+          {[0, 1, 2, 3, 4].map((s) => (
             <div
               key={s}
-              className={`h-1.5 flex-1 rounded-[2px] transition-colors ${step >= s ? "bg-primary" : "bg-surface border border-border"}`}
+              className={`h-1.5 flex-1 rounded-[2px] transition-colors ${step > s ? "bg-primary" : step === s ? "bg-primary/60" : "bg-surface border border-border"}`}
             />
           ))}
         </div>
+
+        {step === 0 && (
+          <section className="animate-fade-in">
+            <h1 className="font-display font-black text-4xl md:text-5xl text-foreground mb-4 uppercase tracking-tighter">
+              What are we installing for?
+            </h1>
+            <p className="text-secondary-text mb-12 font-medium">
+              This helps us tailor your appliance list and system recommendation.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+              {INSTALLATION_CONTEXTS.map(({ id, label, sublabel, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => {
+                    setInstallationContext(id);
+                    trackCalculatorStepCompleted(0, `Context: ${label}`);
+                    setStep(1);
+                  }}
+                  className={`p-8 text-left border-2 rounded-[8px] transition-all group hover:border-primary hover:bg-surface ${
+                    installationContext === id
+                      ? "border-primary bg-surface"
+                      : "border-border bg-background"
+                  }`}
+                >
+                  <div className="w-12 h-12 border-2 border-primary rounded-[4px] flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-colors">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <p className="font-black text-foreground uppercase tracking-wider mb-1">{label}</p>
+                  <p className="text-xs text-secondary-text font-bold">{sublabel}</p>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {step === 1 && (
           <section className="animate-fade-in">
@@ -321,7 +415,7 @@ export default function CalculatorClient() {
               }}
               className="btn-flat btn-primary h-14 px-10 w-full sm:w-auto"
             >
-              Continue to Load Setup
+              Continue
               <ArrowRight className="w-5 h-5" />
             </button>
           </section>
@@ -330,10 +424,10 @@ export default function CalculatorClient() {
         {step === 2 && (
           <section className="animate-fade-in">
             <h2 className="font-display font-black text-4xl md:text-5xl text-foreground mb-4 uppercase tracking-tighter">
-              What are we powering?
+              {installationContext ? CONTEXT_COPY[installationContext].heading : "What are we powering?"}
             </h2>
             <p className="text-secondary-text mb-12 font-medium">
-              Select common appliances to build your energy profile.
+              {installationContext ? CONTEXT_COPY[installationContext].sub : "Select common appliances to build your energy profile."}
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-12">
@@ -664,7 +758,7 @@ export default function CalculatorClient() {
           </section>
         )}
 
-        {step === 4 && result && (
+        {step === 5 && result && (
           <section className="animate-fade-in max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">

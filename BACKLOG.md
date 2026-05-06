@@ -76,16 +76,11 @@ Full SEO foundation implemented. Global metadata in `layout.tsx`: title template
 
 ## Section 2 — Calculator Gaps (P0–P1)
 
-### 2.1 Step Missing: Usage Context (Home / Office / Shop)
-**Priority:** 🟠 P1  
-**File(s):** `app/calculator/page.tsx`  
+### ✅ 2.1 Step Missing: Usage Context (Home / Office / Shop)
+**Priority:** 🟠 P1 → ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-PRD Step 1 asks the user to select their installation context (Home, Office/Business, Shop/Retail, Other). This sets copy tone and default appliance presets for subsequent steps. Currently skipped — the calculator jumps straight to region selection.
-
-**Required work:**
-- Add a new Step 0 (or renumber steps) for context selection
-- Use selection to filter/reorder appliance presets on the load step
-- Pass context through to the lead capture form and API payload
+New Step 0 added before region selection. Four context cards: Home/Residence, Office/Business, Shop/Retail, Other. Clicking a card immediately advances to step 1. Progress bar updated to 5 segments. Step 2 (loads) heading and subtext are context-aware (e.g. "What appliances are you powering?" / "Select everything you want to run on solar at home"). `installationContext` passed through to lead API payload.
 
 ---
 
