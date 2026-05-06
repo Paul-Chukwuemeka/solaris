@@ -151,10 +151,10 @@ Created all four service routes as statically rendered Next.js pages with full m
 ---
 
 ### 3.2 `/about` — Dedicated About Page
-**Priority:** 🟠 P1  
-**File(s):** `app/about/` (new)  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/about/page.tsx`, `components/Navigation.tsx`  
 **Detail:**  
-"About" exists as an anchor section on the home page, but the PRD calls for a standalone `/about` page with brand story, team photos, and certifications. The nav `#about` link should point to `/about` (or both).
+Created a full `/about` standalone page with: hero (brand story + CTAs), stats strip (450+ installs, 12 states, 3+ years, 98% satisfaction), brand origin story section with photo collage, "How We Work" values grid, team cards, standards & certifications, contact block, and bottom CTA. Nav "About" link updated from `#about` to `/about`.
 
 ---
 
