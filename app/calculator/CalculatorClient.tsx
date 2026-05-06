@@ -25,6 +25,19 @@ import {
   Building2,
   ShoppingBag,
   HelpCircle,
+  Fan,
+  AirVent,
+  Microwave,
+  Coffee,
+  WashingMachine,
+  Droplets,
+  Laptop,
+  Monitor,
+  Wifi,
+  Printer,
+  Cctv,
+  Speaker,
+  Plug,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -104,12 +117,99 @@ const HOW_DID_YOU_HEAR_OPTIONS = [
   "Other",
 ];
 
-const PRESET_LOADS = [
-  { name: "LED Bulbs", watts: 10, icon: Lightbulb },
-  { name: "Smart TV", watts: 100, icon: Tv },
-  { name: "Standing Fan", watts: 60, icon: Wind },
-  { name: "Fridge (Inverter)", watts: 150, icon: Refrigerator },
-  { name: "AC (1HP Inverter)", watts: 800, icon: Wind },
+interface PresetAppliance {
+  name: string;
+  watts: number;
+  icon: React.ElementType;
+}
+
+interface PresetCategory {
+  id: string;
+  label: string;
+  icon: React.ElementType;
+  appliances: PresetAppliance[];
+}
+
+const PRESET_CATEGORIES: PresetCategory[] = [
+  {
+    id: "lighting",
+    label: "Lighting",
+    icon: Lightbulb,
+    appliances: [
+      { name: "LED Bulb", watts: 10, icon: Lightbulb },
+      { name: "Fluorescent Tube", watts: 36, icon: Lightbulb },
+      { name: "Security / Flood Light", watts: 30, icon: Lightbulb },
+    ],
+  },
+  {
+    id: "cooling",
+    label: "Cooling",
+    icon: Fan,
+    appliances: [
+      { name: "Ceiling Fan", watts: 75, icon: Fan },
+      { name: "Standing Fan", watts: 60, icon: Wind },
+      { name: "AC (1HP Inverter)", watts: 800, icon: AirVent },
+      { name: "AC (1.5HP Inverter)", watts: 1200, icon: AirVent },
+      { name: "AC (2HP Inverter)", watts: 1500, icon: AirVent },
+    ],
+  },
+  {
+    id: "kitchen",
+    label: "Kitchen",
+    icon: Microwave,
+    appliances: [
+      { name: "Fridge (Inverter)", watts: 150, icon: Refrigerator },
+      { name: "Chest Freezer", watts: 200, icon: Refrigerator },
+      { name: "Microwave", watts: 1000, icon: Microwave },
+      { name: "Electric Kettle", watts: 1500, icon: Coffee },
+      { name: "Blender", watts: 400, icon: Zap },
+    ],
+  },
+  {
+    id: "entertainment",
+    label: "Entertainment",
+    icon: Tv,
+    appliances: [
+      { name: "LED TV 43\"", watts: 80, icon: Tv },
+      { name: "LED TV 55\"", watts: 120, icon: Tv },
+      { name: "DSTV Decoder", watts: 25, icon: Tv },
+      { name: "Home Theatre", watts: 150, icon: Speaker },
+      { name: "CCTV System", watts: 50, icon: Cctv },
+    ],
+  },
+  {
+    id: "computing",
+    label: "Computing",
+    icon: Laptop,
+    appliances: [
+      { name: "Laptop", watts: 65, icon: Laptop },
+      { name: "Desktop PC", watts: 250, icon: Monitor },
+      { name: "Wi-Fi Router", watts: 15, icon: Wifi },
+      { name: "Network Switch", watts: 20, icon: Wifi },
+    ],
+  },
+  {
+    id: "water",
+    label: "Water / Utility",
+    icon: Droplets,
+    appliances: [
+      { name: "Water Pump (0.5HP)", watts: 375, icon: Droplets },
+      { name: "Water Pump (1HP)", watts: 750, icon: Droplets },
+      { name: "Washing Machine", watts: 500, icon: WashingMachine },
+      { name: "Water Dispenser", watts: 100, icon: Droplets },
+    ],
+  },
+  {
+    id: "office",
+    label: "Office / Shop",
+    icon: Printer,
+    appliances: [
+      { name: "Printer / Copier", watts: 400, icon: Printer },
+      { name: "POS Terminal", watts: 30, icon: Plug },
+      { name: "Cash Register", watts: 20, icon: Plug },
+      { name: "Hair Dryer", watts: 1800, icon: Wind },
+    ],
+  },
 ];
 
 export default function CalculatorClient() {
@@ -140,6 +240,9 @@ export default function CalculatorClient() {
   });
   const [leadErrors, setLeadErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>(PRESET_CATEGORIES[0].id);
+  const [customName, setCustomName] = useState("");
+  const [customWatts, setCustomWatts] = useState("");
   const router = useRouter();
 
   // Fire once on mount
@@ -181,7 +284,7 @@ export default function CalculatorClient() {
     }
   }, [loads, region, batteryType, systemPreference, selectedGenerator, step]);
 
-  const addLoad = (preset: (typeof PRESET_LOADS)[0]) => {
+  const addLoad = (preset: PresetAppliance) => {
     const existing = loads.find((l) => l.name === preset.name);
     if (existing) {
       setLoads(
@@ -201,6 +304,20 @@ export default function CalculatorClient() {
         },
       ]);
     }
+  };
+
+  const addCustomLoad = () => {
+    const watts = parseInt(customWatts);
+    if (!customName.trim() || isNaN(watts) || watts <= 0) return;
+    const name = customName.trim();
+    const existing = loads.find((l) => l.name === name);
+    if (existing) {
+      setLoads(loads.map((l) => l.name === name ? { ...l, quantity: l.quantity + 1 } : l));
+    } else {
+      setLoads([...loads, { id: name, name, watts, quantity: 1, hours: 8 }]);
+    }
+    setCustomName("");
+    setCustomWatts("");
   };
 
   const updateQuantity = (id: string, delta: number) => {
@@ -430,19 +547,85 @@ export default function CalculatorClient() {
               {installationContext ? CONTEXT_COPY[installationContext].sub : "Select common appliances to build your energy profile."}
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-12">
-              {PRESET_LOADS.map((p) => (
-                <button
-                  key={p.name}
-                  onClick={() => addLoad(p)}
-                  className="p-4 bg-surface border border-border rounded-[8px] flex flex-col items-center gap-3 hover:border-primary transition-colors group"
-                >
-                  <p.icon className="w-6 h-6 text-secondary-text group-hover:text-primary" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-center">
-                    {p.name}
-                  </span>
-                </button>
-              ))}
+            {/* Category tabs */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {PRESET_CATEGORIES.map((cat) => {
+                const Icon = cat.icon;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-[8px] text-[10px] font-black uppercase tracking-widest border transition-colors ${
+                      activeCategory === cat.id
+                        ? "bg-primary text-background border-primary"
+                        : "bg-background border-border text-secondary-text hover:border-primary hover:text-foreground"
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Appliance grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+              {PRESET_CATEGORIES.find((c) => c.id === activeCategory)?.appliances.map((p) => {
+                const Icon = p.icon;
+                const isAdded = loads.some((l) => l.name === p.name);
+                return (
+                  <button
+                    key={p.name}
+                    onClick={() => addLoad(p)}
+                    className={`p-4 text-left border rounded-[8px] flex flex-col gap-2 transition-colors group ${
+                      isAdded
+                        ? "border-primary bg-surface"
+                        : "border-border bg-background hover:border-primary hover:bg-surface"
+                    }`}
+                  >
+                    <Icon className={`w-5 h-5 ${isAdded ? "text-primary" : "text-secondary-text group-hover:text-primary"}`} />
+                    <span className="text-[10px] font-black uppercase tracking-widest leading-tight">
+                      {p.name}
+                    </span>
+                    <span className="text-[9px] font-bold text-secondary-text">{p.watts}W</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Custom appliance entry */}
+            <div className="border border-dashed border-border rounded-[8px] p-6 mb-10">
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary-text mb-4">
+                Add a custom appliance
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="text"
+                  value={customName}
+                  onChange={(e) => setCustomName(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && addCustomLoad()}
+                  placeholder="Appliance name (e.g. Fish Pond Pump)"
+                  className="flex-1 h-11 px-4 bg-background border border-border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors"
+                />
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    value={customWatts}
+                    onChange={(e) => setCustomWatts(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && addCustomLoad()}
+                    placeholder="Watts"
+                    min="1"
+                    className="w-28 h-11 px-4 bg-background border border-border rounded-[8px] text-sm font-medium text-foreground placeholder:text-secondary-text/50 focus:outline-none focus:border-primary transition-colors"
+                  />
+                  <button
+                    onClick={addCustomLoad}
+                    disabled={!customName.trim() || !customWatts || parseInt(customWatts) <= 0}
+                    className="h-11 px-5 bg-primary text-background font-black text-[10px] uppercase tracking-widest rounded-[8px] hover:opacity-90 transition-opacity disabled:opacity-40 flex items-center gap-2"
+                  >
+                    <Plus className="w-4 h-4" /> Add
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="bg-surface border border-border rounded-[8px] p-8 mb-12">
@@ -498,7 +681,7 @@ export default function CalculatorClient() {
                             {l.quantity}
                           </span>
                           <button
-                            onClick={() => addLoad(l as any)}
+                            onClick={() => updateQuantity(l.id, 1)}
                             className="p-2 hover:text-primary"
                           >
                             <Plus size={14} />
@@ -955,7 +1138,7 @@ export default function CalculatorClient() {
                   <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                     {loads.map((load) => {
                       const Icon =
-                        PRESET_LOADS.find((p) => p.name === load.name)?.icon ||
+                        PRESET_CATEGORIES.flatMap((c) => c.appliances).find((p) => p.name === load.name)?.icon ||
                         Zap;
                       return (
                         <div

@@ -84,26 +84,11 @@ New Step 0 added before region selection. Four context cards: Home/Residence, Of
 
 ---
 
-### 2.2 Only 5 Appliance Presets (PRD Requires 30+)
-**Priority:** 🟠 P1  
-**File(s):** `app/calculator/page.tsx` (lines 27–33)  
+### ✅ 2.2 Only 5 Appliance Presets (PRD Requires 30+)
+**Priority:** 🟠 P1 → ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-Current presets: LED Bulbs, Smart TV, Standing Fan, Fridge, AC. PRD §7 specifies 8 categories with 30+ appliances.
-
-**Missing categories and appliances:**
-- **Lighting:** LED Bulb 15W, Fluorescent Tube 36W, Security/Flood Light 30W
-- **Cooling:** Ceiling Fan, AC 1.5HP, AC 2HP
-- **Kitchen:** Fridge 250L, Chest Freezer, Blender, Electric Kettle, Microwave
-- **Entertainment:** LED TV 43", LED TV 55", DSTV Decoder, Home Theatre, CCTV System
-- **Computing:** Laptop, Desktop PC, Wi-Fi Router, Network Switch
-- **Water/Utility:** Water Pump 0.5HP, Water Pump 1HP, Washing Machine, Water Dispenser
-- **Office/Business:** Printer/Copier, POS Terminal, Cash Register, Hair Dryer
-- **Other:** Custom appliance (user enters name + wattage manually)
-
-**Required work:**
-- Restructure preset list with category grouping
-- Add custom appliance entry (name + wattage inputs)
-- Show wattage per item on the card
+Replaced flat 5-item list with 7 category tabs and 30 preset appliances. Categories: Lighting (3), Cooling (5), Kitchen (5), Entertainment (5), Computing (4), Water/Utility (4), Office/Shop (4). Each card shows appliance name, icon, and wattage. Custom appliance entry (name + watts input) added. Also fixed BACKLOG-5.2: `addLoad(l as any)` in the energy list `+` button replaced with `updateQuantity(l.id, 1)`.
 
 ---
 
