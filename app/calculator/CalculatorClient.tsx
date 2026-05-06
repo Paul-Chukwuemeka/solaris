@@ -505,6 +505,25 @@ export default function CalculatorClient() {
     setStep(6);
   };
 
+  const handleStartOver = () => {
+    setStep(0);
+    setInstallationContext(null);
+    setRegion("enugu");
+    setBatteryType("lithium");
+    setSystemPreference("custom");
+    setSelectedGenerator(null);
+    setLoads([]);
+    setResult(null);
+    setAutonomyDays(1);
+    setBudgetRange(null);
+    setActiveCategory(PRESET_CATEGORIES[0].id);
+    setCustomName("");
+    setCustomWatts("");
+    setCopied(false);
+    // Remove share param from URL without a full page reload
+    window.history.replaceState({}, "", "/calculator");
+  };
+
   return (
     <main className="min-h-screen bg-background pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto">
@@ -1432,12 +1451,18 @@ export default function CalculatorClient() {
                   );
                 })()}
 
-                <div className="mt-8 flex gap-4 print:hidden">
+                <div className="mt-8 flex items-center gap-4 print:hidden">
                   <button
                     onClick={() => setStep(5)}
                     className="btn-flat btn-outline h-14 px-8"
                   >
                     <ArrowLeft className="w-5 h-5" /> Back
+                  </button>
+                  <button
+                    onClick={handleStartOver}
+                    className="text-[10px] font-black uppercase tracking-widest text-secondary-text hover:text-foreground transition-colors ml-2"
+                  >
+                    ↺ Start Over
                   </button>
                 </div>
 

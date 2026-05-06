@@ -125,13 +125,10 @@ Implemented Option A (shareable URL) + print. Results page now shows "Copy Link"
 ---
 
 ### 2.7 "Start Over" Link Missing from Results
-**Priority:** 🟠 P1  
-**File(s):** `app/calculator/page.tsx` (Step 4 section)  
+**Priority:** 🟠 P1 — ✅ DONE  
+**File(s):** `app/calculator/CalculatorClient.tsx`  
 **Detail:**  
-PRD explicitly requires a non-obtrusive "Start Over" link on the results page. The back button returns to Step 3 but there is no way to reset the entire calculator.
-
-**Required work:**
-- Add a "Start Over" link that resets all state and returns to Step 1
+Added a `handleStartOver` function that resets all calculator state (step, region, loads, battery type, autonomy, budget, generator, result, share URL param) back to defaults and navigates to step 0. A subtle "↺ Start Over" text button is displayed next to the "Back" button in the `print:hidden` bottom bar on the results page. Also confirmed BACKLOG-2.8 (disclaimer) was already implemented.
 
 ---
 
