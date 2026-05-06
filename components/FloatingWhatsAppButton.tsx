@@ -2,7 +2,7 @@ import React from "react";
 import { MessageCircle } from "lucide-react";
 
 export default function FloatingWhatsAppButton() {
-  const phoneNumber = "2348000000000"; // Replace with real number
+  const phoneNumber = "2349166301384";
   const message = "Hello Wine Press Solar! I'm interested in getting a solar quote for my property.";
   const encodedMessage = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;

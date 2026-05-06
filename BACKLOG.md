@@ -21,7 +21,7 @@
 ## Section 1 — Critical Fixes (P0 Blockers)
 
 ### 1.1 Lead Capture — Not Wired
-**Priority:** 🔴 P0  
+**Priority:** ✅ DONE  
 **File(s):** `app/calculator/page.tsx`, `app/api/leads/route.ts`  
 **Detail:**  
 The "Book Professional Audit" button on the calculator results page (Step 4) has no `onClick` handler, no form, and no submission logic. The `/api/leads` API route exists but is never called from the frontend. This means zero leads are being captured from the calculator.
@@ -64,7 +64,7 @@ No Google Analytics 4, Meta Pixel, or Google Tag Manager is present anywhere in 
 ---
 
 ### 1.4 Missing `/thank-you` Page
-**Priority:** 🔴 P0  
+**Priority:** ✅ DONE  
 **File(s):** `app/` (new file needed)  
 **Detail:**  
 No `/thank-you` route exists. This page is the conversion tracking trigger for Google Ads and Meta Pixel. It must fire after a lead form submission.

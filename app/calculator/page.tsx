@@ -694,7 +694,7 @@ export default function CalculatorPage() {
                     </button>
                     {result && (
                       <a
-                        href={`https://wa.me/2348000000000?text=${encodeURIComponent(
+                        href={`https://wa.me/2349166301384?text=${encodeURIComponent(
                           `Hi Wine Press Solar! I just used your calculator and got a system recommendation:\n\n` +
                           `📍 Region: ${pricingConfig.regions[region as keyof typeof pricingConfig.regions]?.label}\n` +
                           (result.systemType === "generator"

@@ -77,7 +77,7 @@ export default function Home() {
               Get Your Solar Plan
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <a href="https://wa.me/2348000000000" className="btn-flat btn-outline h-16 px-12 text-sm uppercase tracking-widest">
+            <a href="https://wa.me/2349166301384" className="btn-flat btn-outline h-16 px-12 text-sm uppercase tracking-widest">
               <MessageCircle className="w-5 h-5" />
               Chat on WhatsApp
             </a>

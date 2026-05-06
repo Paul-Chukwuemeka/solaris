@@ -91,7 +91,7 @@ export default function ThankYouPage() {
             </p>
           </div>
           <a
-            href="https://wa.me/2348000000000"
+            href="https://wa.me/2349166301384"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-flat btn-primary h-12 px-8 text-xs uppercase tracking-widest shrink-0"
