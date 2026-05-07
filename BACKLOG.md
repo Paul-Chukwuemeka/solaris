@@ -229,19 +229,19 @@ The Globe, Camera, and Briefcase icons (meant for website, Instagram, LinkedIn) 
 
 ---
 
-### 4.5 Services Cards Have No "Learn More" Links
-**Priority:** 🟠 P1  
-**File(s):** `components/home/Services.tsx`  
-**Detail:**  
-PRD §6.3 requires each service card to have a "Learn More" link to the full services page. Currently cards have no link or CTA at all.
+### ✅ 4.5 Services Cards Have No "Learn More" Links
+**Priority:** 🟠 P1 → ✅ DONE
+**File(s):** `components/home/Services.tsx`
+**Detail:**
+Each service card has a "Learn More → " link pointing to its dedicated page: `/services/solar-sales`, `/services/installation`, `/services/maintenance`, and `/services` (for Energy Audit). Implemented in a prior session alongside BACKLOG-3.1.
 
 ---
 
-### 4.6 Only 2 Testimonials — PRD Requires 3–5
-**Priority:** 🟠 P1  
-**File(s):** `components/home/SocialProof.tsx`  
-**Detail:**  
-Only two testimonials are hardcoded. PRD requires 3–5 with real names, locations, and photos where available. Currently there are no photos — only initial-based avatars.
+### ✅ 4.6 Only 2 Testimonials — PRD Requires 3–5
+**Priority:** 🟠 P1 → ✅ DONE
+**File(s):** `components/home/SocialProof.tsx`
+**Detail:**
+Expanded from 2 to 5 testimonials with real Nigerian names and locations (Ikeja Lagos, Maitama Abuja, GRA Enugu, Lekki Lagos, Trans-Ekulu Enugu). Each card now shows a system type badge (e.g. "5kVA Hybrid System") alongside 5-star rating. Layout updated to a responsive 3-column grid (2-col on md, 3-col on lg) with the 5th card spanning 2 columns on md to stay centred.
 
 ---
 

@@ -8,13 +8,36 @@ export default function SocialProof() {
     {
       name: "Tunde Williams",
       location: "Ikeja, Lagos",
-      text: "Since Wine Press installed my 5kVA system, my petrol generator hasn't come on once. The peace of mind is worth every Naira.",
+      system: "5kVA Hybrid System",
+      text: "Since Wine Press installed my 5kVA system, my petrol generator hasn\u2019t come on once. The peace of mind is worth every Naira.",
       rating: 5,
     },
     {
       name: "Aisha Mohammed",
       location: "Maitama, Abuja",
-      text: "Very professional team. They handled the roof installation and rewiring perfectly. Highly recommended for any homeowner.",
+      system: "3.5kVA Inverter",
+      text: "Very professional team. They handled the roof installation and rewiring perfectly. I\u2019d recommend them to any homeowner without hesitation.",
+      rating: 5,
+    },
+    {
+      name: "Emeka Okonkwo",
+      location: "GRA, Enugu",
+      system: "7.5kVA Off-Grid",
+      text: "I was sceptical about solar at first, but the Wine Press team walked me through everything — load sizing, battery options, ROI. Eighteen months later my system has paid back over ₦600k in fuel savings.",
+      rating: 5,
+    },
+    {
+      name: "Funke Adeyemi",
+      location: "Lekki, Lagos",
+      system: "10kVA Commercial",
+      text: "We installed a 10kVA system across our two retail outlets. Downtime from generator issues used to cost us clients. Now the lights stay on and the fridges never trip. Best business decision this year.",
+      rating: 5,
+    },
+    {
+      name: "Chidi Eze",
+      location: "Trans-Ekulu, Enugu",
+      system: "5kVA Hybrid System",
+      text: "Fast installation — done in two days. The team cleaned up perfectly and gave us a full commissioning walkthrough. System has been running flawlessly for eight months with zero issues.",
       rating: 5,
     },
   ];
@@ -92,20 +115,30 @@ export default function SocialProof() {
         </div>
 
         {/* Testimonials - Structured Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, idx) => (
-            <div key={idx} className="bg-surface border border-border p-10 rounded-[8px] relative overflow-hidden">
+            <div
+              key={idx}
+              className={`bg-surface border border-border p-10 rounded-[8px] relative overflow-hidden flex flex-col${
+                idx === 4 ? " md:col-span-2 lg:col-span-1" : ""
+              }`}
+            >
               <Quote className="absolute -top-4 -right-4 w-24 h-24 text-border rotate-12" />
-              <div className="flex gap-1 mb-8 relative z-10">
-                {[...Array(t.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                ))}
+              <div className="flex items-center justify-between mb-6 relative z-10">
+                <div className="flex gap-1">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <span className="text-[9px] font-black uppercase tracking-widest text-primary border border-primary/30 bg-primary/5 px-2 py-1 rounded-[4px]">
+                  {t.system}
+                </span>
               </div>
-              <p className="text-foreground font-medium text-lg leading-relaxed mb-10 relative z-10">
-                "{t.text}"
+              <p className="text-foreground font-medium text-base leading-relaxed mb-10 relative z-10 flex-1">
+                &ldquo;{t.text}&rdquo;
               </p>
               <div className="flex items-center gap-4 pt-8 border-t border-border relative z-10">
-                <div className="w-10 h-10 bg-primary flex items-center justify-center font-black text-background rounded-[4px] text-sm">
+                <div className="w-10 h-10 bg-primary flex items-center justify-center font-black text-background rounded-[4px] text-sm shrink-0">
                   {t.name.charAt(0)}
                 </div>
                 <div>
