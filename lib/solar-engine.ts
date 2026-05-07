@@ -191,8 +191,8 @@ export function calculateSystem(
     throw new Error("System voltage must be 12V, 24V, or 48V");
   }
 
-  if (batteryAutonomyDays < 1 || batteryAutonomyDays > 30) {
-    throw new Error("Battery autonomy must be between 1 and 30 days");
+  if (batteryAutonomyDays < 0.1 || batteryAutonomyDays > 30) {
+    throw new Error("Battery autonomy must be between 0.1 and 30 days");
   }
 
   if (costUncertaintyMargin < 0 || costUncertaintyMargin > 0.5) {
