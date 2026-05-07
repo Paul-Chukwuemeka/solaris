@@ -34,10 +34,12 @@ export default function Footer() {
         <div>
           <h4 className="font-black text-xs uppercase tracking-[0.2em] mb-10 text-primary">Quick Links</h4>
           <ul className="flex flex-col gap-4 text-slate-400 text-sm font-bold uppercase tracking-widest">
-            <li><a href="#services" className="hover:text-primary transition-colors">Our Services</a></li>
-            <li><a href="#projects" className="hover:text-primary transition-colors">Project Gallery</a></li>
-            <li><a href="#about" className="hover:text-primary transition-colors">About Us</a></li>
+            <li><Link href="/services" className="hover:text-primary transition-colors">Our Services</Link></li>
+            <li><Link href="/projects" className="hover:text-primary transition-colors">Project Gallery</Link></li>
+            <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
             <li><Link href="/calculator" className="hover:text-primary transition-colors">Solar Calculator</Link></li>
+            <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
+            <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
           </ul>
         </div>
 

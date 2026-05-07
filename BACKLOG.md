@@ -213,11 +213,11 @@ All `<img>` tags replaced with Next.js `<Image>` across all 5 files (14 images t
 
 ---
 
-### 4.3 Footer Contact Info is Placeholder
-**Priority:** 🔴 P0  
-**File(s):** `components/Footer.tsx` (lines 50–59)  
-**Detail:**  
-Address: "123 Solar Way, Victoria Island", Phone: "+234 800 SOLAR LIFE", Email: "hello@winepresssolar.com", RC: "123456789" — all fake.
+### ✅ 4.3 Footer Contact Info is Placeholder
+**Priority:** 🔴 P0 → ✅ DONE
+**File(s):** `components/Footer.tsx`
+**Detail:**
+Real contact info already in place: Shop 13, POWA Plaza, By Ogui Police Station, Enugu, Nigeria; +234 916 630 1384; hello@winepresssolar.com. Footer Quick Links also updated from hash anchors (`#services`, `#about`, `#projects`) to proper routed links (`/services`, `/about`, `/projects`). Added Blog and Contact links to footer navigation.
 
 ---
 

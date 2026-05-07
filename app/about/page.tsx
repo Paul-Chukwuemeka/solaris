@@ -141,16 +141,16 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-5 text-secondary-text text-sm font-medium leading-relaxed">
               <p>
-                Nigeria loses an estimated <strong className="text-foreground">₦38 trillion</strong> annually to unreliable power. For the average home or SME, this means thousands of naira spent monthly on petrol generators — money that buys noise, fumes, and a power source that fails exactly when it's most needed.
+                Nigeria loses an estimated <strong className="text-foreground">₦38 trillion</strong> annually to unreliable power. For the average home or SME, this means thousands of naira spent monthly on petrol generators — money that buys noise, fumes, and a power source that fails exactly when it&apos;s most needed.
               </p>
               <p>
-                Wine Press Solar Services was built to replace that dependency with something permanent. A properly designed solar system doesn't just cut electricity bills — it becomes the reliable infrastructure layer that everything else runs on.
+                Wine Press Solar Services was built to replace that dependency with something permanent. A properly designed solar system doesn&apos;t just cut electricity bills — it becomes the reliable infrastructure layer that everything else runs on.
               </p>
               <p>
-                We started in Enugu because that&apos;s home. We've since expanded to 12 states across Nigeria, carrying the same standard of technical work and the same commitment to honest system sizing with us.
+                We started in Enugu because that&apos;s home. We&apos;ve since expanded to 12 states across Nigeria, carrying the same standard of technical work and the same commitment to honest system sizing with us.
               </p>
               <p>
-                Every installation we complete is a household or business that has permanently exited the generator economy. That's the mission, and we measure our success by it.
+                Every installation we complete is a household or business that has permanently exited the generator economy. That&apos;s the mission, and we measure our success by it.
               </p>
             </div>
           </div>
