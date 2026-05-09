@@ -245,11 +245,11 @@ Expanded from 2 to 5 testimonials with real Nigerian names and locations (Ikeja 
 
 ---
 
-### 4.7 No "How It Works" Process Section
-**Priority:** 🟠 P1  
-**File(s):** `app/page.tsx`, `components/home/` (new component)  
-**Detail:**  
-PRD §6.4 specifies a 3–4 step visual process section on the home page showing the journey from calculator → quote → install → support. This section is absent.
+### ✅ 4.7 No "How It Works" Process Section
+**Priority:** 🟠 P1 → ✅ DONE
+**File(s):** `components/home/HowItWorks.tsx` (new), `app/page.tsx`
+**Detail:**
+Created `HowItWorks` component with a 4-step process section: 01 Size Your System (→ /calculator), 02 Get Your Quote (→ /contact), 03 Professional Installation (→ /services/installation), 04 Ongoing Support (→ /services/maintenance). Each step card has a large watermark number, icon, description, and a "Learn More" CTA link. Includes a bottom strip CTA. Inserted between Services and ROI on the homepage.
 
 ---
 

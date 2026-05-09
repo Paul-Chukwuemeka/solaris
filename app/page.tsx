@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
 import SocialProof from "@/components/home/SocialProof";
 import Services from "@/components/home/Services";
+import HowItWorks from "@/components/home/HowItWorks";
 import About from "@/components/home/About";
 import ROI from "@/components/home/ROI";
 import { HelpCircle, ChevronDown, ArrowRight } from "lucide-react";
@@ -134,6 +135,7 @@ export default function Home() {
       <Hero />
       <SocialProof />
       <Services />
+      <HowItWorks />
       <ROI />
       <About />
       
