@@ -7,11 +7,11 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 export const metadata: Metadata = {
   title: "Projects & Reviews",
   description:
-    "Browse Wine Press Solar Services' completed solar installations across Nigeria — commercial, residential, and industrial. Read verified client reviews from Enugu, Lagos, Abuja, Port Harcourt and beyond.",
+    "Browse Winepress Solar Services' completed solar installations across Nigeria — commercial, residential, and industrial. Read verified client reviews from Enugu, Lagos, Abuja, Port Harcourt and beyond.",
   alternates: { canonical: "https://winepresssolar.com/projects" },
   openGraph: {
     url: "https://winepresssolar.com/projects",
-    title: "Solar Projects & Client Reviews | Wine Press Solar Services",
+    title: "Solar Projects & Client Reviews | Winepress Solar Services",
     description:
       "450+ completed solar installations across Nigeria. See our project gallery and read verified client reviews from homes and businesses we've powered.",
   },
@@ -25,7 +25,7 @@ const projects = [
     type: "Commercial",
     desc: "Full hybrid solar system with grid-tie capability for a 6-floor office complex. Eliminated 80% of diesel generator dependency.",
     image: "https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2000&auto=format&fit=crop",
-    alt: "20kVA hybrid solar installation for commercial office park — Wine Press Solar Services project in Lagos",
+    alt: "20kVA hybrid solar installation for commercial office park — Winepress Solar Services project in Lagos",
   },
   {
     title: "Residential Duplex",
@@ -34,7 +34,7 @@ const projects = [
     type: "Residential",
     desc: "Off-grid solar system with lithium battery bank for a family home. Powers AC, fridge, lighting, and security systems 24/7.",
     image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop",
-    alt: "3.5kVA solar inverter system installed on residential duplex by Wine Press Solar Services",
+    alt: "3.5kVA solar inverter system installed on residential duplex by Winepress Solar Services",
   },
   {
     title: "Retail Pharmacy",
@@ -43,7 +43,7 @@ const projects = [
     type: "Commercial",
     desc: "Hybrid solar system with priority load management ensuring refrigeration and critical medical equipment never loses power.",
     image: "https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2070&auto=format&fit=crop",
-    alt: "7.5kVA solar power system for retail pharmacy — Wine Press Solar commercial installation Nigeria",
+    alt: "7.5kVA solar power system for retail pharmacy — Winepress Solar commercial installation Nigeria",
   },
   {
     title: "Private School Campus",
@@ -52,7 +52,7 @@ const projects = [
     type: "Institutional",
     desc: "Large off-grid solar array powering classrooms, admin block, and canteen. Replaced a diesel generator that was running 10 hours daily.",
     image: "https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2000&auto=format&fit=crop",
-    alt: "15kVA off-grid solar installation for private school campus in Enugu by Wine Press Solar",
+    alt: "15kVA off-grid solar installation for private school campus in Enugu by Winepress Solar",
   },
   {
     title: "4-Bedroom Bungalow",
@@ -61,7 +61,7 @@ const projects = [
     type: "Residential",
     desc: "Hybrid system with 2-day battery autonomy. Client has not paid a DISCOM bill or bought petrol since installation.",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2000&auto=format&fit=crop",
-    alt: "5kVA hybrid solar system for 4-bedroom bungalow in Enugu — Wine Press Solar Services",
+    alt: "5kVA hybrid solar system for 4-bedroom bungalow in Enugu — Winepress Solar Services",
   },
   {
     title: "Restaurant & Event Centre",
@@ -70,7 +70,7 @@ const projects = [
     type: "Commercial",
     desc: "High-demand commercial system designed for industrial freezers, sound equipment, and full event lighting loads.",
     image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop",
-    alt: "10kVA hybrid solar installation for restaurant and event centre in Port Harcourt by Wine Press Solar",
+    alt: "10kVA hybrid solar installation for restaurant and event centre in Port Harcourt by Winepress Solar",
   },
   {
     title: "Gated Estate — 12 Units",
@@ -79,7 +79,7 @@ const projects = [
     type: "Estate",
     desc: "Individual solar systems for each unit in a gated estate. Centralised monitoring with remote inverter diagnostics for estate management.",
     image: "https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=2067&auto=format&fit=crop",
-    alt: "Individual solar systems for 12-unit gated estate in Asaba Delta State by Wine Press Solar",
+    alt: "Individual solar systems for 12-unit gated estate in Asaba Delta State by Winepress Solar",
   },
   {
     title: "Hair Salon & Barbing Shop",
@@ -88,7 +88,7 @@ const projects = [
     type: "SME",
     desc: "Compact solar backup system to keep hairdryers, clippers, and fans running during NEPA outages — zero business disruption.",
     image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2000&auto=format&fit=crop",
-    alt: "2kVA solar backup system for hair salon in Enugu by Wine Press Solar Services",
+    alt: "2kVA solar backup system for hair salon in Enugu by Winepress Solar Services",
   },
   {
     title: "Medical Diagnostic Centre",
@@ -97,7 +97,7 @@ const projects = [
     type: "Healthcare",
     desc: "Mission-critical solar system with dual-inverter redundancy for a diagnostic lab. Ultrasound, X-ray, and laboratory equipment on clean uninterrupted power.",
     image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop",
-    alt: "12kVA hybrid solar system for medical diagnostic centre in Enugu by Wine Press Solar Services",
+    alt: "12kVA hybrid solar system for medical diagnostic centre in Enugu by Winepress Solar Services",
   },
 ];
 
@@ -106,7 +106,7 @@ const testimonials = [
     name: "Tunde Williams",
     location: "Ikeja, Lagos",
     role: "Homeowner — 5kVA Hybrid",
-    text: "Since Wine Press installed my 5kVA system, my petrol generator hasn't come on once. The peace of mind is worth every Naira. The team was professional, fast, and genuinely knowledgeable.",
+    text: "Since Winepress installed my 5kVA system, my petrol generator hasn't come on once. The peace of mind is worth every Naira. The team was professional, fast, and genuinely knowledgeable.",
     rating: 5,
   },
   {
@@ -127,7 +127,7 @@ const testimonials = [
     name: "Mrs. Chidinma Eze",
     location: "Trans-Ekulu, Enugu",
     role: "Homeowner — 3kVA Off-Grid",
-    text: "I was sceptical at first but the system sizing was spot on. My generator has been off for 8 months. Wine Press even followed up 3 months after installation to check performance.",
+    text: "I was sceptical at first but the system sizing was spot on. My generator has been off for 8 months. Winepress even followed up 3 months after installation to check performance.",
     rating: 5,
   },
   {
@@ -141,7 +141,7 @@ const testimonials = [
     name: "Dr. Ngozi Nnaji",
     location: "Independence Layout, Enugu",
     role: "Clinic Owner — 8kVA Medical",
-    text: "Reliable power for medical equipment is non-negotiable. Wine Press understood our load requirements and designed a redundant system. 14 months in and zero failures.",
+    text: "Reliable power for medical equipment is non-negotiable. Winepress understood our load requirements and designed a redundant system. 14 months in and zero failures.",
     rating: 5,
   },
 ];

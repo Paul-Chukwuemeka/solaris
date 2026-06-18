@@ -14,7 +14,7 @@ interface WhatsAppLinkProps {
 export default function WhatsAppLink({
   source,
   className,
-  message = "Hello Wine Press Solar! I'm interested in getting a solar quote for my property.",
+  message = "Hello Winepress Solar! I'm interested in getting a solar quote for my property.",
   children,
 }: WhatsAppLinkProps) {
   const url = `https://wa.me/2349166301384?text=${encodeURIComponent(message)}`;

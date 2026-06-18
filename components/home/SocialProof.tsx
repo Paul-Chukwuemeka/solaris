@@ -9,7 +9,7 @@ export default function SocialProof() {
       name: "Tunde Williams",
       location: "Ikeja, Lagos",
       system: "5kVA Hybrid System",
-      text: "Since Wine Press installed my 5kVA system, my petrol generator hasn\u2019t come on once. The peace of mind is worth every Naira.",
+      text: "Since Winepress installed my 5kVA system, my petrol generator hasn\u2019t come on once. The peace of mind is worth every Naira.",
       rating: 5,
     },
     {
@@ -23,7 +23,7 @@ export default function SocialProof() {
       name: "Emeka Okonkwo",
       location: "GRA, Enugu",
       system: "7.5kVA Off-Grid",
-      text: "I was sceptical about solar at first, but the Wine Press team walked me through everything — load sizing, battery options, ROI. Eighteen months later my system has paid back over ₦600k in fuel savings.",
+      text: "I was sceptical about solar at first, but the Winepress team walked me through everything — load sizing, battery options, ROI. Eighteen months later my system has paid back over ₦600k in fuel savings.",
       rating: 5,
     },
     {
@@ -48,21 +48,21 @@ export default function SocialProof() {
       location: "Lekki Phase 1",
       size: "20kVA Hybrid",
       image: "https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2070&auto=format&fit=crop",
-      alt: "20kVA hybrid solar installation for commercial office park — Wine Press Solar Services project",
+      alt: "20kVA hybrid solar installation for commercial office park — Winepress Solar Services project",
     },
     {
       title: "Residential Duplex",
       location: "Surulere",
       size: "3.5kVA Inverter",
       image: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?q=80&w=2070&auto=format&fit=crop",
-      alt: "3.5kVA solar inverter system installed on residential duplex by Wine Press Solar Services",
+      alt: "3.5kVA solar inverter system installed on residential duplex by Winepress Solar Services",
     },
     {
       title: "Retail Pharmacy",
       location: "Gwarimpa",
       size: "7.5kVA System",
       image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2070&auto=format&fit=crop",
-      alt: "7.5kVA solar power system for retail pharmacy — Wine Press Solar commercial installation Nigeria",
+      alt: "7.5kVA solar power system for retail pharmacy — Winepress Solar commercial installation Nigeria",
     },
   ];
 

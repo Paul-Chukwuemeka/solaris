@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import ConversionTracker from "@/components/ConversionTracker";
 
 export const metadata: Metadata = {
-  title: "Quote Request Received | Wine Press Solar Services",
+  title: "Quote Request Received | Winepress Solar Services",
   description:
     "Thank you for your solar quote request. Our team will review your system specification and contact you within 24 hours.",
   robots: { index: false, follow: false },
@@ -21,7 +21,7 @@ const NEXT_STEPS = [
     icon: Phone,
     step: "02",
     title: "We Call You Within 24 Hours",
-    desc: "A Wine Press consultant will call your WhatsApp number to confirm details and answer any questions.",
+    desc: "A Winepress consultant will call your WhatsApp number to confirm details and answer any questions.",
   },
   {
     icon: CheckCircle2,

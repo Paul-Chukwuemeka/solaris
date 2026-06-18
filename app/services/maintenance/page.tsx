@@ -6,7 +6,7 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 export const metadata: Metadata = {
   title: "Solar Maintenance & Repair",
   description:
-    "Keep your solar system running at peak efficiency with Wine Press Solar Services. We offer scheduled maintenance plans, remote monitoring, panel cleaning, and emergency repairs across Nigeria.",
+    "Keep your solar system running at peak efficiency with Winepress Solar Services. We offer scheduled maintenance plans, remote monitoring, panel cleaning, and emergency repairs across Nigeria.",
   alternates: { canonical: "https://winepresssolar.com/services/maintenance" },
   openGraph: {
     url: "https://winepresssolar.com/services/maintenance",

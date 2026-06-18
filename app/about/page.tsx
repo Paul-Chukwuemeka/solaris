@@ -17,11 +17,11 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn the story behind Wine Press Solar Services — Enugu's trusted solar company founded to eliminate the energy barrier for Nigerian homes and SMEs. Our mission, team, and values.",
+    "Learn the story behind Winepress Solar Services — Enugu's trusted solar company founded to eliminate the energy barrier for Nigerian homes and SMEs. Our mission, team, and values.",
   alternates: { canonical: "https://winepresssolar.com/about" },
   openGraph: {
     url: "https://winepresssolar.com/about",
-    title: "About Wine Press Solar Services",
+    title: "About Winepress Solar Services",
     description:
       "Founded in Enugu to bring structured, high-availability solar power to Nigerian households and businesses. 450+ installations, 12 states, 98% customer satisfaction.",
   },
@@ -105,7 +105,7 @@ export default function AboutPage() {
           <span className="text-primary italic">Powered by Purpose.</span>
         </h1>
         <p className="text-secondary-text max-w-2xl text-base font-medium leading-relaxed mb-10">
-          Wine Press Solar Services was founded in Enugu with a single mission: eliminate the energy barrier holding back Nigerian households and SMEs. We provide structured, high-availability solar power solutions that serve as the foundation for growth — built on technical honesty and long-term partnership.
+          Winepress Solar Services was founded in Enugu with a single mission: eliminate the energy barrier holding back Nigerian households and SMEs. We provide structured, high-availability solar power solutions that serve as the foundation for growth — built on technical honesty and long-term partnership.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <Link href="/calculator" className="btn-flat btn-primary h-14 px-10 text-xs uppercase tracking-widest">
@@ -120,7 +120,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map(({ value, label, icon: Icon }) => (
             <div key={label} className="bg-surface border border-border rounded-[8px] p-8 flex flex-col items-start gap-4 hover:border-primary transition-colors duration-300">
-              <div className="w-11 h-11 border border-primary rounded-[4px] flex items-center justify-center text-primary">
+              <div className="w-11 h-11 border border-primary rounded-sm flex items-center justify-center text-primary">
                 <Icon size={20} />
               </div>
               <div>
@@ -144,7 +144,7 @@ export default function AboutPage() {
                 Nigeria loses an estimated <strong className="text-foreground">₦38 trillion</strong> annually to unreliable power. For the average home or SME, this means thousands of naira spent monthly on petrol generators — money that buys noise, fumes, and a power source that fails exactly when it&apos;s most needed.
               </p>
               <p>
-                Wine Press Solar Services was built to replace that dependency with something permanent. A properly designed solar system doesn&apos;t just cut electricity bills — it becomes the reliable infrastructure layer that everything else runs on.
+                Winepress Solar Services was built to replace that dependency with something permanent. A properly designed solar system doesn&apos;t just cut electricity bills — it becomes the reliable infrastructure layer that everything else runs on.
               </p>
               <p>
                 We started in Enugu because that&apos;s home. We&apos;ve since expanded to 12 states across Nigeria, carrying the same standard of technical work and the same commitment to honest system sizing with us.
@@ -162,18 +162,18 @@ export default function AboutPage() {
               <p className="text-background text-[10px] font-black uppercase tracking-widest leading-tight">Years of Solar Excellence</p>
             </div>
             <div className="aspect-square bg-surface border border-border rounded-[8px] overflow-hidden p-2">
-              <div className="relative w-full h-full rounded-[4px] overflow-hidden">
+              <div className="relative w-full h-full rounded-sm overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?q=80&w=800&auto=format&fit=crop"
-                  alt="Wine Press Solar technician at work on a Nigerian rooftop installation"
+                  alt="Winepress Solar technician at work on a Nigerian rooftop installation"
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover grayscale"
                 />
               </div>
             </div>
-            <div className="col-span-2 aspect-[2/1] bg-surface border border-border rounded-[8px] overflow-hidden p-2">
-              <div className="relative w-full h-full rounded-[4px] overflow-hidden">
+            <div className="col-span-2 aspect-2/1 bg-surface border border-border rounded-[8px] overflow-hidden p-2">
+              <div className="relative w-full h-full rounded-sm overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=1200&auto=format&fit=crop"
                   alt="Monocrystalline solar panels installed on a rooftop in Nigeria"
@@ -193,7 +193,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {values.map(({ title, desc, icon: Icon }) => (
             <div key={title} className="bg-surface border border-border rounded-[8px] p-8 flex gap-6 hover:border-primary transition-colors duration-300">
-              <div className="w-11 h-11 border border-primary rounded-[4px] flex items-center justify-center text-primary shrink-0 mt-0.5">
+              <div className="w-11 h-11 border border-primary rounded-sm flex items-center justify-center text-primary shrink-0 mt-0.5">
                 <Icon size={20} />
               </div>
               <div>
@@ -211,7 +211,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {team.map(({ name, role, bio }) => (
             <div key={name} className="bg-surface border border-border rounded-[8px] p-8 hover:border-primary transition-colors duration-300">
-              <div className="w-12 h-12 bg-primary/10 border border-primary/30 rounded-[4px] flex items-center justify-center text-primary font-display font-black text-xl mb-6">
+              <div className="w-12 h-12 bg-primary/10 border border-primary/30 rounded-sm flex items-center justify-center text-primary font-display font-black text-xl mb-6">
                 {name[0]}
               </div>
               <h3 className="font-display font-black text-base text-foreground uppercase tracking-tighter mb-1">{name}</h3>
@@ -244,16 +244,16 @@ export default function AboutPage() {
       <section className="max-w-7xl mx-auto px-6 mb-24">
         <div className="bg-surface border border-border rounded-[8px] p-10 md:p-14 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 border border-primary rounded-[4px] flex items-center justify-center text-primary shrink-0">
+            <div className="w-10 h-10 border border-primary rounded-sm flex items-center justify-center text-primary shrink-0">
               <MapPin size={18} />
             </div>
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-secondary-text mb-1">Head Office</p>
-              <p className="text-sm text-foreground font-medium leading-relaxed">Shop 13, POWA Plaza,<br />By Ogui Police Station,<br />Enugu, Nigeria</p>
+              <p className="text-sm text-foreground font-medium leading-relaxed">God&apos;s Power Plaza, Dustbin<br />Alaba International Market,<br />Lagos, Nigeria</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 border border-primary rounded-[4px] flex items-center justify-center text-primary shrink-0">
+            <div className="w-10 h-10 border border-primary rounded-sm flex items-center justify-center text-primary shrink-0">
               <Phone size={18} />
             </div>
             <div>
@@ -263,7 +263,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 border border-primary rounded-[4px] flex items-center justify-center text-primary shrink-0">
+            <div className="w-10 h-10 border border-primary rounded-sm flex items-center justify-center text-primary shrink-0">
               <Mail size={18} />
             </div>
             <div>

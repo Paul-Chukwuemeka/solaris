@@ -19,7 +19,7 @@ export default function About() {
                 <div className="relative w-full h-full rounded-[4px] overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?q=80&w=800&auto=format&fit=crop"
-                    alt="Wine Press Solar technician — professional solar installation engineer in Nigeria"
+                    alt="Winepress Solar technician — professional solar installation engineer in Nigeria"
                     fill
                     sizes="(max-width: 1024px) 50vw, 25vw"
                     className="object-cover grayscale"
@@ -34,7 +34,7 @@ export default function About() {
                 <div className="relative w-full h-full rounded-[4px] overflow-hidden">
                   <Image
                     src="https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=1200&auto=format&fit=crop"
-                    alt="Monocrystalline solar panels installed on a rooftop by Wine Press Solar Services in Nigeria"
+                    alt="Monocrystalline solar panels installed on a rooftop by Winepress Solar Services in Nigeria"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-700"
@@ -53,7 +53,7 @@ export default function About() {
               <span className="text-primary italic">Nigerian Innovation.</span>
             </h2>
             <p className="text-secondary-text text-lg leading-relaxed mb-10 font-medium">
-              Wine Press Solar Services was founded with a single mission: to eliminate the energy barrier for Nigerian households and SMEs. 
+              Winepress Solar Services was founded with a single mission: to eliminate the energy barrier for Nigerian households and SMEs. 
               We provide structured, high-availability electricity solutions that serve as the foundation for growth.
             </p>
             

@@ -6,7 +6,7 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 export const metadata: Metadata = {
   title: "Solar Panel & Equipment Sales",
   description:
-    "Buy top-tier monocrystalline solar panels, lithium batteries, hybrid inverters and accessories in Nigeria. Wine Press Solar Services supplies premium equipment to homes and businesses in Enugu, Lagos, Abuja and beyond.",
+    "Buy top-tier monocrystalline solar panels, lithium batteries, hybrid inverters and accessories in Nigeria. Winepress Solar Services supplies premium equipment to homes and businesses in Enugu, Lagos, Abuja and beyond.",
   alternates: { canonical: "https://winepresssolar.com/services/solar-sales" },
   openGraph: {
     url: "https://winepresssolar.com/services/solar-sales",
@@ -20,27 +20,27 @@ const equipment = [
   {
     category: "Solar Panels",
     desc: "Monocrystalline PERC panels from 400W to 600W per unit — built for Nigerian sun intensity and humidity.",
-    specs: ["Efficiency: 20–22%", "Warranty: 25 years power output", "Brands: Jinko, LONGi, Canadian Solar"],
+    specs: ["Efficiency: 80–90%", "Warranty: 25 years power output", "Brands: Jinko, LONGi, Canadian Solar etc."],
   },
   {
     category: "Batteries",
     desc: "Lithium iron phosphate (LiFePO4) and AGM gel deep-cycle storage — scalable from home to commercial.",
-    specs: ["Lithium: 200Ah, 5000+ cycles", "Gel: 100–200Ah, maintenance-free", "Brands: Felicity, Felicity Lithium, generic LFP"],
+    specs: ["Lithium: 200KWh, 5000+ cycles", "Gel: 100–200KWh, maintenance-free", "Brands: Felicity, Felicity Lithium, generic LFP"],
   },
   {
     category: "Hybrid Inverters",
     desc: "Grid-tie, off-grid, and hybrid inverters that seamlessly switch between solar, battery, and grid/generator.",
-    specs: ["Range: 1kVA – 20kVA", "Pure sine wave output", "Brands: Growatt, Victron, Voltronic"],
+    specs: ["Range: 1kVA – 20kVA", "Pure sine wave output", "Brands: Deye, Must Energy, Felicity,CWorth"],
   },
   {
     category: "Charge Controllers",
     desc: "MPPT charge controllers that extract maximum power from your panels in all weather conditions.",
-    specs: ["MPPT efficiency: 98%+", "Range: 20A – 100A", "Smart display with battery health tracking"],
+    specs: ["MPPT efficiency: 98%+", "Range: 20A – 120A", "Smart display with battery health tracking"],
   },
   {
     category: "Accessories & Cabling",
     desc: "Solar-rated DC cables, MC4 connectors, breakers, combiner boxes, and mounting rails.",
-    specs: ["UV-rated 4mm² and 6mm² DC cable", "Stainless steel mounting hardware", "Pre-crimped MC4 connectors"],
+    specs: ["UV-rated 4mm² and 25mm² DC cable", "Stainless steel mounting hardware", "Pre-crimped MC4 connectors"],
   },
 ];
 
@@ -66,7 +66,7 @@ export default function SolarSalesPage() {
       <section className="max-w-7xl mx-auto px-6 mb-20">
         <div className="flex flex-col md:flex-row md:items-start gap-12">
           <div className="flex-1">
-            <div className="w-14 h-14 border-2 border-primary rounded-[4px] flex items-center justify-center text-primary mb-8">
+            <div className="w-14 h-14 border-2 border-primary rounded-sm flex items-center justify-center text-primary mb-8">
               <ShoppingBag size={26} />
             </div>
             <p className="text-primary font-black tracking-widest uppercase text-xs mb-4">Solar Equipment</p>
@@ -97,7 +97,7 @@ export default function SolarSalesPage() {
               <ul className="space-y-1.5">
                 {item.specs.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-[11px] text-foreground font-bold">
-                    <span className="text-primary mt-0.5 flex-shrink-0">—</span>
+                    <span className="text-primary mt-0.5 shrink-0">—</span>
                     {s}
                   </li>
                 ))}
@@ -110,11 +110,11 @@ export default function SolarSalesPage() {
       {/* Why Buy From Us */}
       <section className="max-w-7xl mx-auto px-6 mb-20">
         <div className="bg-surface border border-border rounded-[8px] p-10 md:p-14">
-          <h2 className="font-display font-black text-2xl text-foreground uppercase tracking-tighter mb-8">Why Buy From Wine Press?</h2>
+          <h2 className="font-display font-black text-2xl text-foreground uppercase tracking-tighter mb-8">Why Buy From Winepress?</h2>
           <ul className="space-y-4">
             {whyBuyFromUs.map((point) => (
               <li key={point} className="flex items-start gap-4">
-                <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                 <span className="text-sm text-foreground font-medium leading-relaxed">{point}</span>
               </li>
             ))}
@@ -127,7 +127,7 @@ export default function SolarSalesPage() {
         <div className="border-t border-border pt-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h3 className="font-display font-black text-2xl text-foreground uppercase tracking-tighter mb-2">Ready to Order?</h3>
-            <p className="text-secondary-text text-sm font-medium">Tell us your system spec and we'll prepare a formal quote within 24 hours.</p>
+            <p className="text-secondary-text text-sm font-medium">Tell us your system spec and we&apos;ll prepare a formal quote within 24 hours.</p>
           </div>
           <div className="flex gap-4">
             <WhatsAppLink source="solar-sales-cta" className="btn-flat btn-primary h-14 px-10 text-xs uppercase tracking-widest" />

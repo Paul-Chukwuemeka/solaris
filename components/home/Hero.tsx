@@ -24,7 +24,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-secondary-text text-lg md:text-xl max-w-xl mb-12 leading-relaxed">
-            Wine Press Solar provides structured, reliable energy solutions for Nigerian homes and businesses. 
+            Winepress Solar provides structured, reliable energy solutions for Nigerian homes and businesses. 
             High-efficiency equipment, professional installation, and absolute energy security.
           </p>
 
@@ -65,7 +65,7 @@ export default function Hero() {
              <div className="aspect-4/5 bg-slate-200 dark:bg-slate-800 rounded-[4px] relative overflow-hidden grayscale-[0.2] hover:grayscale-0 transition-all duration-500">
                 <Image
                   src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop"
-                  alt="Wine Press Solar professional installation — 5.5kVA hybrid solar system installed in Enugu, South-East Nigeria"
+                  alt="Winepress Solar professional installation — 5.5kVA hybrid solar system installed in Enugu, South-East Nigeria"
                   fill
                   sizes="(max-width: 1024px) 0px, 50vw"
                   className="object-cover"

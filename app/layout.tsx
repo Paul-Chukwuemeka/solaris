@@ -18,9 +18,9 @@ const outfit = Outfit({
 });
 
 const SITE_URL = "https://winepresssolar.com";
-const SITE_NAME = "Wine Press Solar Services";
+const SITE_NAME = "Winepress Solar Services";
 const DEFAULT_DESCRIPTION =
-  "Stop paying for generator fuel. Go solar today with Wine Press Solar Services — Enugu's trusted provider of high-quality solar sales, installation, and maintenance across Nigeria.";
+  "Stop paying for generator fuel. Go solar today with Winepress Solar Services — Enugu's trusted provider of high-quality solar sales, installation, and maintenance across Nigeria.";
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "inverter Nigeria",
     "solar power Nigeria",
     "solar calculator Nigeria",
-    "Wine Press Solar",
+    "Winepress Solar",
     "solar company Enugu",
     "how many solar panels Nigeria",
     "solar inverter price Nigeria 2026",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} | Smart Solar Energy Solutions in Nigeria`,
     description: DEFAULT_DESCRIPTION,
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Wine Press Solar Services — Reliable Solar Energy in Nigeria" }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Winepress Solar Services — Reliable Solar Energy in Nigeria" }],
   },
   twitter: {
     card: "summary_large_image",

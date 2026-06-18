@@ -1,4 +1,4 @@
-# Wine Press Solar — Feature Backlog & Fix Register
+# Winepress Solar — Feature Backlog & Fix Register
 
 > Last updated: May 2026  
 > Cross-referenced against: `wine-press-solar-prd-2.md` (v1.0)
@@ -40,7 +40,7 @@ The "Book Professional Audit" button on the calculator results page (Step 4) has
 **Priority:** 🔴 P0 → ✅ DONE  
 **File(s):** `app/page.tsx`, `components/FloatingWhatsAppButton.tsx`, `app/calculator/page.tsx`, `app/thank-you/page.tsx`  
 **Detail:**  
-All WhatsApp links updated from placeholder `2348000000000` to real number `2349166301384` (Wine Press Solar, +234 916 630 1384). Calculator results "Talk to an Expert" CTA pre-fills a WhatsApp message with the full system spec (region, daily kWh, inverter kVA, battery Ah, panel watts, cost range).
+All WhatsApp links updated from placeholder `2348000000000` to real number `2349166301384` (Winepress Solar, +234 916 630 1384). Calculator results "Talk to an Expert" CTA pre-fills a WhatsApp message with the full system spec (region, daily kWh, inverter kVA, battery Ah, panel watts, cost range).
 
 ---
 
@@ -120,7 +120,7 @@ Added Step 5 "What's Your Budget?" — optional 6-option selector (Under ₦500k
 **Priority:** 🟡 P2 → ✅ DONE  
 **File(s):** `app/calculator/CalculatorClient.tsx`, `app/calculator/page.tsx`, `app/globals.css`, `components/FloatingWhatsAppButton.tsx`  
 **Detail:**  
-Implemented Option A (shareable URL) + print. Results page now shows "Copy Link" and "Print" buttons. Share link encodes a JSON snapshot (result, region, batteryType, autonomyDays, budgetRange) as base64 in a `?share=` query param. Navigating to `/calculator?share=...` hydrates straight to the results page via a `useSearchParams` effect. Print view hides nav/footer/sidebar and shows a Wine Press branding footer. CalculatorPage wrapped in `<Suspense>` to satisfy Next.js `useSearchParams` boundary requirement.
+Implemented Option A (shareable URL) + print. Results page now shows "Copy Link" and "Print" buttons. Share link encodes a JSON snapshot (result, region, batteryType, autonomyDays, budgetRange) as base64 in a `?share=` query param. Navigating to `/calculator?share=...` hydrates straight to the results page via a `useSearchParams` effect. Print view hides nav/footer/sidebar and shows a Winepress branding footer. CalculatorPage wrapped in `<Suspense>` to satisfy Next.js `useSearchParams` boundary requirement.
 
 ---
 
@@ -199,7 +199,7 @@ FAQ exists as a home page section with only 3 questions. PRD calls for a dedicat
 The PRD explicitly states: *"Hero image: real project photographs, ideally showing a Lagos/Nigerian residential or office setting. No stock imagery."* All images currently use Unsplash URLs.
 
 **Required work:**
-- Replace with real Wine Press project photos
+- Replace with real Winepress project photos
 - Compress and serve as WebP (use Next.js `<Image>` component with `formats`)
 - Add descriptive alt text to all images
 
@@ -361,7 +361,7 @@ No `.env` example file exists. Once email sending, analytics, and reCAPTCHA are 
 | Admin Price Table UI | Non-technical interface to update `pricing-config.json` values without code changes |
 | WhatsApp Business API | Automated responses and lead follow-up for v2.0 |
 | A/B Testing | Hero headline and CTA copy variation via GTM or VWO |
-| Financing / Instalment Info | High-impact CRO element — show payment flexibility if Wine Press offers it |
+| Financing / Instalment Info | High-impact CRO element — show payment flexibility if Winepress offers it |
 | Partner Logo Strip | Equipment brand partnerships (Luminous, Felicity, etc.) in Social Proof section |
 
 ---

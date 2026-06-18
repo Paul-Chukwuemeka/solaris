@@ -1,13 +1,13 @@
 ☀
 
-**WINE PRESS SOLAR SERVICES**
+**Winepress SOLAR SERVICES**
 
 Web Application
 
 *Product Requirements Document · v1.0*
 
   -------------------------- --------------------------------------------
-  **Document Owner**         Wine Press Solar Services
+  **Document Owner**         Winepress Solar Services
 
   **Version**                1.0 --- Initial Release
 
@@ -18,7 +18,7 @@ Web Application
 
 **1. Executive Summary**
 
-Wine Press Solar Services is a Nigerian solar energy company offering
+Winepress Solar Services is a Nigerian solar energy company offering
 end-to-end services across sales, installation, and maintenance of
 residential and commercial solar systems. This document defines the
 requirements for the company\'s first web application --- a
@@ -71,7 +71,7 @@ A self-service, interactive calculator that walks a customer through
 their own household appliances --- at their own pace, on their own
 device --- removes all three friction points. The customer arrives at a
 recommendation they co-created, which they trust, and which is already
-associated with Wine Press Solar Services. By the time they submit a
+associated with Winepress Solar Services. By the time they submit a
 lead, they are warm, informed, and psychologically committed.
 
 Paired with a landing page built for paid and organic traffic, this
@@ -327,7 +327,7 @@ indicative cost range.
 -   The output must feel personalised. A user should feel the result was
     designed specifically for them.
 
--   The result must create a reason to contact Wine Press Solar
+-   The result must create a reason to contact Winepress Solar
     Services. It should not fully replace the sales conversation but
     should make that conversation easy and warm.
 
@@ -565,7 +565,7 @@ requirement (1kVA, 2kVA, 3.5kVA, 5kVA, 7.5kVA, 10kVA, 15kVA, 20kVA).
 **8.5 Pricing Engine**
 
 Pricing is calculated from a configurable price table maintained by the
-Wine Press admin team. The table maps:
+Winepress admin team. The table maps:
 
 -   Panel Wattage × Quantity → Equipment cost range
 
@@ -775,7 +775,7 @@ sufficient for v1.0).
 
 **12. Design Aesthetics & Visual Identity**
 
-The Wine Press Solar Services application follows a **modern, minimalist,
+The Winepress Solar Services application follows a **modern, minimalist,
 and flat design philosophy**. The interface focuses on clarity,
 typography, and functional spacing to build trust and convey
 professionalism.
@@ -934,7 +934,7 @@ scalability requirements of v1.0:
 
 **16. Open Questions & Dependencies**
 
-The following items require input from the Wine Press team before or
+The following items require input from the Winepress team before or
 during development:
 
   ------------------------------------------------------------------------------

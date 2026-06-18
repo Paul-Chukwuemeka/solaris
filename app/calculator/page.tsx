@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://winepresssolar.com/calculator" },
   openGraph: {
     url: "https://winepresssolar.com/calculator",
-    title: "Free Solar System Calculator | Wine Press Solar Services",
+    title: "Free Solar System Calculator | Winepress Solar Services",
     description:
       "Size your solar system in minutes. Select your appliances, region, and battery preference — get an instant cost estimate and book a professional audit.",
   },

@@ -6,7 +6,7 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 export const metadata: Metadata = {
   title: "Solar Services",
   description:
-    "Explore Wine Press Solar Services: solar panel sales, professional installation, repairs and maintenance, and energy audits for homes and businesses across Nigeria.",
+    "Explore Winepress Solar Services: solar panel sales, professional installation, repairs and maintenance, and energy audits for homes and businesses across Nigeria.",
   alternates: { canonical: "https://winepresssolar.com/services" },
   openGraph: {
     url: "https://winepresssolar.com/services",
@@ -82,7 +82,7 @@ export default function ServicesPage() {
           <span className="text-primary italic">Under One Roof.</span>
         </h1>
         <p className="text-secondary-text max-w-2xl text-base font-medium leading-relaxed mb-10">
-          From sourcing the best equipment to a fully commissioned system with ongoing maintenance — Wine Press Solar Services is your single point of accountability for clean, reliable power.
+          From sourcing the best equipment to a fully commissioned system with ongoing maintenance — Winepress Solar Services is your single point of accountability for clean, reliable power.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <Link href="/calculator" className="btn-flat btn-primary h-14 px-10 text-xs uppercase tracking-widest">

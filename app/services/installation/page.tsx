@@ -6,7 +6,7 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 export const metadata: Metadata = {
   title: "Solar System Installation",
   description:
-    "Professional solar system installation for homes and businesses across Nigeria. Wine Press Solar Services provides certified engineering teams, 2-year workmanship warranty, and post-install commissioning.",
+    "Professional solar system installation for homes and businesses across Nigeria. Winepress Solar Services provides certified engineering teams, 2-year workmanship warranty, and post-install commissioning.",
   alternates: { canonical: "https://winepresssolar.com/services/installation" },
   openGraph: {
     url: "https://winepresssolar.com/services/installation",

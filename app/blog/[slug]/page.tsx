@@ -59,12 +59,12 @@ export default async function BlogPostPage({ params }: Props) {
     datePublished: post.date,
     author: {
       "@type": "Organization",
-      name: "Wine Press Solar Services",
+      name: "Winepress Solar Services",
       url: "https://winepresssolar.com",
     },
     publisher: {
       "@type": "Organization",
-      name: "Wine Press Solar Services",
+      name: "Winepress Solar Services",
       url: "https://winepresssolar.com",
     },
   };
@@ -114,7 +114,7 @@ export default async function BlogPostPage({ params }: Props) {
                 W
               </div>
               <div>
-                <p className="font-black text-foreground text-sm uppercase tracking-widest mb-1">Wine Press Solar Team</p>
+                <p className="font-black text-foreground text-sm uppercase tracking-widest mb-1">Winepress Solar Team</p>
                 <p className="text-secondary-text text-sm font-medium leading-relaxed">
                   Professional solar engineers serving Nigerian homes and businesses since 2021. Every article is reviewed by our technical team for accuracy.
                 </p>

@@ -13,7 +13,7 @@ export default function Footer() {
           <Link href="/" className="flex items-center gap-2 mb-8">
             <Sun className="text-primary w-8 h-8" />
             <div className="flex flex-col">
-              <span className="font-display font-black text-xl tracking-tight leading-none uppercase">WINE PRESS</span>
+              <span className="font-display font-black text-xl tracking-tight leading-none uppercase">Winepress</span>
               <span className="text-[10px] tracking-[0.2em] font-bold text-primary uppercase leading-none mt-1">Solar Services</span>
             </div>
           </Link>
@@ -84,7 +84,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-600 text-[10px] uppercase tracking-[0.2em] font-black">
-        <p>© {currentYear} Wine Press Solar Services.</p>
+        <p>© {currentYear} Winepress Solar Services.</p>
         <div className="flex gap-8">
           <span>Enugu, Nigeria</span>
           <span>Built for Performance</span>

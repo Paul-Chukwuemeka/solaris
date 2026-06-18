@@ -1302,7 +1302,7 @@ export default function CalculatorClient() {
                     {result && (
                       <a
                         href={`https://wa.me/2349166301384?text=${encodeURIComponent(
-                          `Hi Wine Press Solar! I just used your calculator and got a system recommendation:\n\n` +
+                          `Hi Winepress Solar! I just used your calculator and got a system recommendation:\n\n` +
                           (result.systemType === "generator"
                             ? `⚡ System: Portable Solar Generator\n🔋 Model: ${result.generatorName}\n`
                             : `⚡ System: Custom Solar Installation\n` +
@@ -1468,7 +1468,7 @@ export default function CalculatorClient() {
 
                 {/* Print-only branding footer */}
                 <div className="hidden print:block mt-12 pt-8 border-t border-border text-center">
-                  <p className="font-display font-black text-xl uppercase tracking-tighter text-foreground mb-1">Wine Press Solar Services</p>
+                  <p className="font-display font-black text-xl uppercase tracking-tighter text-foreground mb-1">Winepress Solar Services</p>
                   <p className="text-xs text-secondary-text">Shop 13, POWA Plaza, By Ogui Police Station, Enugu, Nigeria</p>
                   <p className="text-xs text-secondary-text">+234 916 630 1384 · hello@winepresssolar.com · winepresssolar.com</p>
                   <p className="text-[9px] text-secondary-text mt-4">* This is an indicative estimate. Final pricing depends on site survey, equipment availability, and current market rates.</p>
@@ -1737,7 +1737,7 @@ export default function CalculatorClient() {
               </div>
 
               <p className="text-[9px] text-secondary-text font-bold text-center leading-relaxed">
-                By submitting, you agree to be contacted by Wine Press Solar Services. We never share your data with third parties.
+                By submitting, you agree to be contacted by Winepress Solar Services. We never share your data with third parties.
               </p>
             </form>
           </div>

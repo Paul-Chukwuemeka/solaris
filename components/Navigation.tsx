@@ -42,7 +42,7 @@ export default function Navigation() {
         <Link href="/" className="flex items-center gap-2 group">
           <Sun className="text-primary w-6 h-6" />
           <div className="flex flex-col">
-            <span className="font-display font-black text-lg tracking-tight leading-none">WINE PRESS</span>
+            <span className="font-display font-black text-lg tracking-tight leading-none">Winepress</span>
             <span className="text-[8px] tracking-[0.2em] font-bold text-primary uppercase leading-none mt-1">Solar Services</span>
           </div>
         </Link>

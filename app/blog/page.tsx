@@ -6,11 +6,11 @@ import { posts } from "@/lib/posts";
 export const metadata: Metadata = {
   title: "Solar Energy Blog",
   description:
-    "Expert guides on solar sizing, inverter pricing, battery comparisons, and energy independence for Nigerian homes and businesses. Written by the Wine Press Solar engineering team.",
+    "Expert guides on solar sizing, inverter pricing, battery comparisons, and energy independence for Nigerian homes and businesses. Written by the Winepress Solar engineering team.",
   alternates: { canonical: "https://winepresssolar.com/blog" },
   openGraph: {
     url: "https://winepresssolar.com/blog",
-    title: "Solar Energy Blog | Wine Press Solar Services",
+    title: "Solar Energy Blog | Winepress Solar Services",
     description:
       "Practical solar guides for Nigerian homeowners and SMEs — system sizing, pricing, equipment comparisons, and more.",
   },
@@ -45,7 +45,7 @@ export default function BlogPage() {
           <span className="text-primary italic">For Nigeria.</span>
         </h1>
         <p className="text-secondary-text max-w-xl text-base font-medium leading-relaxed">
-          Practical advice on system sizing, equipment, pricing, and energy independence — written by the Wine Press Solar engineering team.
+          Practical advice on system sizing, equipment, pricing, and energy independence — written by the Winepress Solar engineering team.
         </p>
       </section>
 
